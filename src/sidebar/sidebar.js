@@ -1,17 +1,16 @@
 import './sidebar.css';
 import {useState} from 'react';
-import Todos from '../todos/todos';
 
 function Sidebar() {
   const toggler = document.querySelector('#toggler');
   const [isOpen, setIsOpen] = useState(true);
 
-  const ToggleSidebar = () => {
+  const toggleSidebar = () => {
     isOpen === true ? setIsOpen(false) : setIsOpen(true);
   };
 
   toggler.addEventListener('change', e => {
-    ToggleSidebar();
+    toggleSidebar();
   });
 
   return (
