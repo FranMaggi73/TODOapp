@@ -1,31 +1,32 @@
 #toggler {
-    display: none;
+  display: none;
 }
 
 #sidebar {
-    background-color: #D9D9D9;
-    width: 317px;
-    height: calc(100% - 70px);
-    margin-top: 70px;
-    transition-duration: 300ms;
+  position: relative;
+  background-color: var(--dark-background);
+  min-width: 317px;
+  height: 100%;
+  transition-duration: 300ms;
+  transition: min-width 300ms, visibility 300ms linear;
 }
 
 .hidden {
-    transform: translateX(-317px);
-    transition-duration: 300ms;
+  min-width: 0px !important;
+  visibility: hidden;
 }
 
 .burger {
-    user-select: none;
-    position: fixed;
-    color: #FFFFFF;
-    font-size: 40px;
-    line-height: 40px;
-    margin-left: 10px;
-    margin-top: 15px;
+  user-select: none;
+  position: fixed;
+  color: white;
+  font-size: 40px;
+  line-height: 40px;
+  margin-left: 10px;
+  margin-top: 15px;
 }
 
 .burger label:hover {
-    cursor: pointer;
-    color: #D9D9D9;
+  cursor: pointer;
+  color: var(--dark-background);
 }

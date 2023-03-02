@@ -1,0 +1,76 @@
+#grid {
+  width: calc(100% - 140px);
+  padding: 70px;
+  margin: 0%;
+  display: grid;
+  row-gap: 16px;
+  column-gap: 12px;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.todo {
+  position: relative;
+  height: 256px;
+  width: 100%;
+  z-index: 0;
+  margin: 0%;
+  background-color: var(--light-background);
+  border: 1px solid #000000;
+  border-radius: 20px;
+  user-select: none;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.todo-content{
+  display: flex;
+  flex-direction: column;
+  table-layout: fixed;
+  width: 100%;
+  min-height: 20%;
+}
+
+.todo-content h1{
+  padding-left: 24px;
+  text-align: left;
+  font-weight: 400;
+  vertical-align: middle;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 5px 0px 0px 0px;
+}
+
+.todo:hover {
+  cursor: pointer;
+  transition-duration: 120ms;
+  box-shadow: 5px 5px 10px var(--dark-font);
+}
+
+.bar {
+  display: table;
+  height: 25px;
+  width: 100%;
+  text-align: center;
+}
+
+.progress-bar{
+  display: table-cell;
+  vertical-align: middle;
+  width: 85%;
+  height: 10px;
+  bottom: 0%;
+  border: none;
+}
+
+.progress-bar::-webkit-progress-bar {
+  background-color: var(--dark-background);
+  border-radius: 10px;
+}
+
+.progress-bar::-webkit-progress-value {
+  background-color: black;
+  border-radius: 10px;
+}
