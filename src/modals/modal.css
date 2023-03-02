@@ -1,4 +1,5 @@
 .modal {
+  user-select: none;
   position: fixed;
   z-index: 2; 
   left: 0;

@@ -1,4 +1,5 @@
 .search-box {
+  user-select: none;
   position: fixed;
   display: flex;
   margin: 0%;

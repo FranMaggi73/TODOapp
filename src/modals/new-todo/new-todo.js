@@ -34,20 +34,22 @@ function NewTodoButton() {
     closeModal();
   }
 
-  return [
-    <div className='new-todo' onClick={showModal}>
-      <p>+</p>
-    </div>,
-    <Modal 
-      opacity={opacity}
-      hidden={hideModal}
-      close={closeModal}
-      title='New TODO'
-      onSuccess={success}
-      successMessage='Create TODO'
-      Content={<input placeholder="TODO's name..." type='text' className='modal-input'></input>}
-    />
-  ]
+  if (window.location.pathname === '/') {
+    return [
+      <div className='new-todo' onClick={showModal}>
+        <p>+</p>
+      </div>,
+      <Modal 
+        opacity={opacity}
+        hidden={hideModal}
+        close={closeModal}
+        title='New TODO'
+        onSuccess={success}
+        successMessage='Create TODO'
+        Content={<input placeholder="TODO's name..." type='text' className='modal-input'></input>}
+      />
+    ]
+  }
 }
 
 export default NewTodoButton

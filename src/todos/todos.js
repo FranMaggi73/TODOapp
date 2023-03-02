@@ -38,26 +38,28 @@ function Todos() {
   }, []);
 
 
-  return (
-    <div className='container'>
-      <header>
-        <h1>My TODOs</h1>
-      </header>
-      <div id="grid">
-        {todos.map(todo => {
-          const completed = todo.tasks.reduce((acc, curr) => {
-            return curr.completed ? (acc + 1) : acc;
-          }, 0);
-          return <Todo 
-            id={todo.id} 
-            title={todo.title} 
-            tasks={todo.tasks} 
-            completed={completed} 
-          />
-        })}
+  if (window.location.pathname === '/') {
+    return (
+      <div className='container'>
+        <header>
+          <h1>My TODOs</h1>
+        </header>
+        <div id="grid">
+          {todos.map(todo => {
+            const completed = todo.tasks.reduce((acc, curr) => {
+              return curr.completed ? (acc + 1) : acc;
+            }, 0);
+            return <Todo 
+              id={todo.id} 
+              title={todo.title} 
+              tasks={todo.tasks} 
+              completed={completed} 
+            />
+          })}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default Todos
