@@ -9,6 +9,7 @@
       name="description"
       content="Web site created using create-react-app"
     />
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -28,6 +29,12 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <header>
+      <input type="checkbox" id="toggler">
+      <div class="burger"><label for="toggler">☰</label></div>
+      <h1>TODOapp</h1>
+    </header>
+    <aside id="sidebar"></aside>
     <div id="root"></div>
     <!--
       This HTML file is a template.
