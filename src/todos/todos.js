@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 function Todo(props) {
   return (
-    <a className='todo' onClick={e => (window.location.href = `/edit/${props.id}`)}>
+    <div className='todo' onClick={e => (window.location.href = `/edit/${props.id}`)}>
       <div className='todo-content'>
         <h1>{props.title}</h1>
           <div className='bar'>
@@ -15,12 +15,12 @@ function Todo(props) {
             </progress>
           </div>
       </div>
-    </a>
+    </div>
   )
 }
 
 function Todos() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState([]);
 
   const fetchData = async () => {
     const todos = await fetch('./todos.json')
@@ -31,26 +31,31 @@ function Todos() {
       throw new Error(`${response.status} - ${response.statusText}`);
     })
     setTodos(todos);
-  }
+  };
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, []);
 
 
   return (
-    <div id="grid">
-      {todos.map(todo => {
-        const completed = todo.tasks.reduce((acc, curr) => {
-          return curr.completed ? (acc + 1) : acc;
-        }, 0);
-        return <Todo 
-          id={todo.id} 
-          title={todo.title} 
-          tasks={todo.tasks} 
-          completed={completed} 
-        />
-      })}
+    <div className='container'>
+      <header>
+        <h1>My TODOs</h1>
+      </header>
+      <div id="grid">
+        {todos.map(todo => {
+          const completed = todo.tasks.reduce((acc, curr) => {
+            return curr.completed ? (acc + 1) : acc;
+          }, 0);
+          return <Todo 
+            id={todo.id} 
+            title={todo.title} 
+            tasks={todo.tasks} 
+            completed={completed} 
+          />
+        })}
+      </div>
     </div>
   )
 }

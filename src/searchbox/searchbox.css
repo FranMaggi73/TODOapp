@@ -1,0 +1,83 @@
+.search-box {
+  position: fixed;
+  display: flex;
+  margin: 0%;
+  top: 15px;
+  left: 60px;
+  background-color: var(--dark-background);
+  height: 40px;
+  border-radius: 10px;
+  width: 257px;
+  z-index: 1;
+}
+
+.search-box i {
+  position:relative;
+  font-size: 22px;
+  aspect-ratio: 1 / 1;
+}
+
+.search-box i::before{
+  position: absolute;
+  top: 25%;
+  left: 25%;
+}
+
+.dropdown {
+  position: relative;
+  display: block;
+  width: calc(100% - 40px);
+  background-color: var(--dark-background);
+  outline: 0px;
+  border-radius: 10px;
+}
+
+.dropdown input{
+  all: unset;
+  position: absolute;
+  height: 60%;
+  top: 20%;
+  margin: 0;
+  background-color: var(--dark-background);
+  left: 8px;
+  width: calc(100% - 40px);
+  font-size: 20px;
+  font-weight: 400;
+  text-align: left;
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  margin-top: 44px;
+  min-height: 0px;
+  background-color: var(--dark-background);
+  border-radius: 10px;
+  z-index: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  row-gap: 0;
+  box-shadow: 1px 1px 5px black;
+}
+
+.row {
+  user-select: none;
+  display:inline-block;
+  height: 40px;
+  width: calc(100% - 8px);
+  color: black;
+  font-size: 20px;
+  text-align: left;
+  font-weight: 400;
+  padding-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: var(--light-background);
+  padding-top: 8px;
+}
+
+.row:hover {
+  background-color: #e9e9e9;
+  cursor: pointer;
+}

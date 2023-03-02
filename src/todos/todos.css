@@ -1,6 +1,29 @@
+.container{
+  width: 100%;
+  display: inline;
+}
+
+.container header{
+  position: relative;
+  height: 100px;
+  padding: 0%;
+  width: 100%;
+  display: flex;
+}
+
+.container header h1{
+  padding-left: 70px;
+  position: absolute;
+  margin: 0%;
+  left: 0;
+  bottom: 20px;
+  font-weight: 400;
+  font-size: 45px;
+}
+
 #grid {
   width: calc(100% - 140px);
-  padding: 70px;
+  padding: 0px 70px 0px 70px;
   margin: 0%;
   display: grid;
   row-gap: 16px;
