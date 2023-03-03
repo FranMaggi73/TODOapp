@@ -1,10 +1,12 @@
 import './App.css';
+import { useState } from 'react';
+
 import Todos from './todos/todos';
 import Sidebar from './sidebar/sidebar.js'
 import NewTodoButton from './modals/new-todo/new-todo';
 import Searchbox from './searchbox/searchbox';
+import Header from './header/header';
 import filters from './sidebar/filters';
-import { useState } from 'react';
 
 function App() {
   const [filter, setFilter] = useState(() => filters.All)
@@ -14,6 +16,7 @@ function App() {
   }
 
   return [
+    <Header />,
     <Searchbox key='searchbox'/>,
     <Sidebar key='sidebar' filters={filters} filterChange={changeFilter}/>,
     <Todos key='todos' selectedFilter={filter}/>,

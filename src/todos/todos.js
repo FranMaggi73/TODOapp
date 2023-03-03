@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 function Todo(props) {
   return (
-    <div className='todo' onClick={e => (window.location.href = `/edit/${props.id}`)}>
+    <div className='todo'>
       <div className='todo-header'>
         <h1>{props.title}</h1>
           <div className='bar'>
@@ -29,9 +29,10 @@ function Todos(props) {
   const [todos, setTodos] = useState([]);
 
   const fetchData = async () => {
-    const todos = await fetch('./todos.json')
+    const todos = await fetch('/api')
     .then((response) => {
       if(response.status === 200){
+        console.log(response)
         return response.json();
       }
       throw new Error(`${response.status} - ${response.statusText}`);

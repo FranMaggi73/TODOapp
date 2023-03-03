@@ -7,7 +7,7 @@ function Searchbox() {
   const [results, setResults] = useState([]);
 
   const fetchData = async () => {
-    const todos = await fetch('/todos.json')
+    const todos = await fetch('/todos')
     .then((response) => {
       if(response.status === 200){
         return response.json();
@@ -53,7 +53,7 @@ function Searchbox() {
               <div 
                 key={result.id}
                 className='row' 
-                onMouseDown={e => (window.location.href = `/edit/${result.id}`)}
+                onMouseDown={e => (window.location.href = `/edit?${result.id}`)}
               >
                 {result.title}
               </div>
