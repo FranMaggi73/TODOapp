@@ -1,9 +1,36 @@
 import './todos.css';
 import React, { useState, useEffect } from 'react';
+import NewTodoButton from '../modals/new-todo/new-todo';
+import Modal from '../modals/modal-template';
 
 function Todo(props) {
+  const success = async () => {
+    props.modal(null);
+    await fetch(`/todos/delete/${props.id}`, {
+      method: 'DELETE'
+    });
+    await props.update();
+  };
+
+  const showModal = () => {
+    props.modal(<Modal 
+      key='new-todo-modal'
+      close={() => props.modal(null)} 
+      title={`Delete: ${props.title}`}
+      onSuccess={success}
+      successMessage='Confirm'
+      Content={<h1 className='modal-text'>Are you sure?</h1>}
+    />)
+  }
+
   return (
-    <div className='todo'>
+    <div className='todo' onClick={props.click}>
+      <div className='todo-options' onClick={(e) => {
+          e.stopPropagation();
+          showModal();
+        }}>
+        <p>...</p>
+      </div>
       <div className='todo-header'>
         <h1>{props.title}</h1>
           <div className='bar'>
@@ -29,10 +56,9 @@ function Todos(props) {
   const [todos, setTodos] = useState([]);
 
   const fetchData = async () => {
-    const todos = await fetch('/api')
+    const todos = await fetch('/todos')
     .then((response) => {
       if(response.status === 200){
-        console.log(response)
         return response.json();
       }
       throw new Error(`${response.status} - ${response.statusText}`);
@@ -45,8 +71,9 @@ function Todos(props) {
   }, []);
 
   if (window.location.pathname === '/') {
-    return (
-      <div className='container'>
+    return [
+      <NewTodoButton key='newtodo' modal={props.modal} update={fetchData}/>,
+      <div key="todos" className='container'>
         <header>
           <h1>My TODOs</h1>
         </header>
@@ -59,18 +86,21 @@ function Todos(props) {
             const empty = todo.tasks.length === 0 ? true : false;
 
             return <Todo 
+              click={e => (window.location.href = `/edit?${todo.id}`)}
+              modal={props.modal}
               key={todo.id}
               id={todo.id} 
               empty={empty}
               title={todo.title} 
               tasks={todo.tasks} 
               completed={completed}
+              update={fetchData}
               progress={empty ? 'No tasks' : `${completed}/${todo.tasks.length} Tasks`} 
             />
           })}
         </div>
       </div>
-    )
+    ]
   }
 }
 

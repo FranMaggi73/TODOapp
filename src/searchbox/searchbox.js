@@ -1,7 +1,7 @@
 import './searchbox.css'
 import { useEffect, useState } from 'react';
 
-function Searchbox() {
+function Searchbox(props) {
   const [showMenu, setShowMenu] = useState('none');
   const [todos, setTodos] = useState([]);
   const [results, setResults] = useState([]);

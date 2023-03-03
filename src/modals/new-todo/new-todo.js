@@ -1,55 +1,40 @@
-import { useState } from 'react';
 import Modal from '../modal-template';
 import './new-todo.css'
 
-function NewTodoButton() {
-  const [hideModal, setHideModal] = useState(true);
-  const [opacity, setOpacity] = useState(1);
+function NewTodoButton(props) {
+  const success = async () => {
+    props.modal(null);
+
+    const input = document.querySelector('.modal-input');
+    await fetch('/todos/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: input.value })
+    });
+    props.update()
+  };
 
   const showModal = () => {
-    setHideModal(false);
-    setTimeout(() => {
-      setOpacity(1)
-    }, 0);
-  }
-
-  const closeModal = () => {
-    setOpacity(0)
-    setTimeout(() => {
-      setHideModal(true);
-    }, 100);
-  }
-
-  const success = () => {
-    // Add TODO's name validation
-    //
-    // const input = document.querySelector('.modal-input');
-    // const valid = isValidInput(input.value)
-    // if(valid) {
-      // fetch('../todo/create', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ "title": input.value })
-      // })
-    // }
-    closeModal();
+    props.modal(<Modal 
+      key='new-todo-modal'
+      close={() => props.modal(null)} 
+      title='New TODO'
+      onSuccess={success}
+      successMessage='Create TODO'
+      Content={<input placeholder="TODO's name..." type='text' className='modal-input'/>}
+    />);
   }
 
   if (window.location.pathname === '/') {
-    return [
-      <div key='new-todo-button' className='new-todo' onClick={showModal}>
+    return (
+      <div key='new-todo-button' className='new-todo' onClick={() => {
+        showModal();
+      }}>
         <p>+</p>
-      </div>,
-      <Modal 
-        key='new-todo-modal'
-        opacity={opacity}
-        hidden={hideModal}
-        close={closeModal}
-        title='New TODO'
-        onSuccess={success}
-        successMessage='Create TODO'
-        Content={<input placeholder="TODO's name..." type='text' className='modal-input'/>}
-      />
-    ]
+      </div>
+    )
   }
 }
 

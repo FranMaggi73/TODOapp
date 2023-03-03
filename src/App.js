@@ -1,27 +1,22 @@
 import './App.css';
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Todos from './todos/todos';
-import Sidebar from './sidebar/sidebar.js'
-import NewTodoButton from './modals/new-todo/new-todo';
-import Searchbox from './searchbox/searchbox';
-import Header from './header/header';
-import filters from './sidebar/filters';
+import View from './pages/view';
+import Layout from './pages/layout';
+import Edit from './pages/edit';
 
 function App() {
-  const [filter, setFilter] = useState(() => filters.All)
 
-  function changeFilter(selectedFilter) {
-    setFilter(() => selectedFilter)
-  }
-
-  return [
-    <Header />,
-    <Searchbox key='searchbox'/>,
-    <Sidebar key='sidebar' filters={filters} filterChange={changeFilter}/>,
-    <Todos key='todos' selectedFilter={filter}/>,
-    <NewTodoButton key='newtodo'/>
-  ]
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<View />} />
+          <Route path='/edit/' element={<Edit/> } />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
