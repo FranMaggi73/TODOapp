@@ -4,11 +4,11 @@
   display: flex;
   margin: 0%;
   top: 15px;
-  left: 60px;
+  left: 80px;
   background-color: var(--dark-background);
   height: 40px;
   border-radius: 10px;
-  width: 257px;
+  width: 300px;
   z-index: 1;
 }
 

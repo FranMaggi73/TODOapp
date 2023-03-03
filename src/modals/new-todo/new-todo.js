@@ -36,17 +36,18 @@ function NewTodoButton() {
 
   if (window.location.pathname === '/') {
     return [
-      <div className='new-todo' onClick={showModal}>
+      <div key='new-todo-button' className='new-todo' onClick={showModal}>
         <p>+</p>
       </div>,
       <Modal 
+        key='new-todo-modal'
         opacity={opacity}
         hidden={hideModal}
         close={closeModal}
         title='New TODO'
         onSuccess={success}
         successMessage='Create TODO'
-        Content={<input placeholder="TODO's name..." type='text' className='modal-input'></input>}
+        Content={<input placeholder="TODO's name..." type='text' className='modal-input'/>}
       />
     ]
   }

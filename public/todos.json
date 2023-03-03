@@ -108,16 +108,4 @@
     "created_at": "10-02-2023",
     "title": "Magenta",
     "tasks": []
-},{
-    "id": "0007",
-    "color": "#000000",
-    "created_at": "10-02-2023",
-    "title": "Negro",
-    "tasks": []
-},{
-    "id": "0008",
-    "color": "#FF6000",
-    "created_at": "10-02-2023",
-    "title": "Naranja",
-    "tasks": []
 }]
