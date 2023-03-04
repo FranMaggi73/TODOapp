@@ -24,7 +24,7 @@ export default function Edit() {
 
   useEffect(() => {
     fetchData()
-  }, []);
+  });
 
   async function deleteTask(todoId, taskId) {
     await fetch(`/todos/delete-task/${taskId}`, {
@@ -35,7 +35,7 @@ export default function Edit() {
       body: JSON.stringify({ id: todoId })
     })
     fetchData();
-  }
+  };
 
   async function newTask(id) {
     const input = document.querySelector('.new-task-input');
@@ -45,6 +45,17 @@ export default function Edit() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title: input.value, completed: false })
+    });
+    fetchData();
+  };
+
+  async function checkTasks(id, taskId, value) {
+    await fetch(`/todos/check-task/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ taskId, completed: value })
     });
     fetchData();
   }
@@ -64,6 +75,9 @@ export default function Edit() {
                 type='checkbox' 
                 className="checkbox"  
                 defaultChecked={task.completed}
+                onChange={e => {
+                  checkTasks(id, task.id, e.target.checked);
+                }}
               />
               <p>{task.title}</p>
               <div className='task-options' onClick={(e) => {
@@ -78,7 +92,10 @@ export default function Edit() {
         <div className="todo-task">
           <button className="new-task-submit" onClick={() => newTask(id)}>+</button>
           <p className="add-task">Add task</p>
-          <input placeholder="title..." type='text' className="new-task-input"/>
+          <input 
+            placeholder="title..." 
+            className="new-task-input"
+          />
         </div>
       </div>
     </>
