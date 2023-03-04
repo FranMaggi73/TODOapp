@@ -19,7 +19,7 @@ export default function Edit() {
       throw new Error(`${response.status} - ${response.statusText}`);
     })
     setTodo(todo);
-    setTasks(todo.tasks);
+    setTasks(Object.entries(todo.tasks));
   };
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Edit() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title, completed: false })
+      body: JSON.stringify({ title })
     });
     fetchData();
   };
@@ -67,19 +67,19 @@ export default function Edit() {
       </Link>
       <div id="todo-edit">
         <h1>{todo.title}</h1>
-        {tasks.map((task) => {
+        {tasks.map(([taskId, task]) => {
           return (
             <div key={task.title} className='todo-task'>
               <input 
                 type='checkbox' 
                 className="checkbox"  
                 defaultChecked={task.completed}
-                onChange={ e => checkTasks(id, task.id, e.target.checked)}
+                onChange={ e => checkTasks(id, taskId, e.target.checked)}
               />
               <p>{task.title}</p>
               <div className='task-options' onClick={ e => {
                   e.stopPropagation();
-                  deleteTask(todo.id, task.id);
+                  deleteTask(id, taskId);
                 }}>
                 <p>...</p>
               </div>

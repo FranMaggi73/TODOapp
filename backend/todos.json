@@ -1,86 +1,40 @@
-[
-  {
+{
+  "1": {
     "title": "Compras",
-    "id": "7a3f4c2a293d7175",
-    "tasks": [
-      {
+    "tasks": {
+      "f10f0828260c257f": {
         "title": "Tarea 1",
-        "completed": true,
-        "id": "f10f0828260c257f"
+        "completed": true
       },
-      {
+      "4b547c283d247ce5": {
         "title": "Tarea 2",
-        "completed": true,
-        "id": "4b547c283d247ce5"
+        "completed": true
       },
-      {
+      "805b98a0e79c08b1": {
         "title": "Tarea 3",
-        "completed": false,
-        "id": "805b98a0e79c08b1"
+        "completed": false
       },
-      {
+      "0f9b588bfa5f5bd4": {
         "title": "Tareas 4",
-        "completed": false,
-        "id": "0f9b588bfa5f5bd4"
+        "completed": false
       }
-    ]
+    }
   },
-  {
-    "title": "Super",
-    "id": "8f96f74f5f750197",
-    "tasks": [
-      {
-        "title": "",
-        "completed": true,
-        "id": "7b09fc8099539f79"
-      }
-    ]
-  },
-  {
-    "title": "Estudios",
-    "id": "a5c2b4a1ade5d925",
-    "tasks": []
-  },
-  {
-    "title": "Todas Completadas",
-    "id": "f750fb5cd2dd835b",
-    "tasks": [
-      {
+  "742a7ec7e334acb0": {
+    "title": "Todo vacío",
+    "tasks": {
+      "ad51ec5aa8387bd7": {
         "title": "Tarea 1",
-        "completed": true,
-        "id": "d4181b28f4d4e4cc"
+        "completed": false
       },
-      {
+      "985fc59babf75c19": {
         "title": "Tarea 2",
-        "completed": true,
-        "id": "c70023334a741742"
-      }
-    ]
-  },
-  {
-    "title": "Incompleta",
-    "id": "6a9ebe71ee6c7609",
-    "tasks": [
-      {
-        "title": "Tarea 2",
-        "completed": false,
-        "id": "aaf986399dde62b6"
+        "completed": false
       },
-      {
-        "title": "Tarea sin Completar",
-        "completed": false,
-        "id": "dc4f54e991415c2d"
-      },
-      {
-        "title": "Tarea 1*",
-        "completed": false,
-        "id": "6aeb24b435fa5a1c"
+      "ace552047fe6b1de": {
+        "title": "Tarea 3",
+        "completed": false
       }
-    ]
-  },
-  {
-    "title": "Vacía",
-    "id": "3b73d64bbf686faf",
-    "tasks": []
+    }
   }
-]
+}

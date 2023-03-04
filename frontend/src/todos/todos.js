@@ -16,14 +16,17 @@ function Todos(props) {
       }
       throw new Error(`${response.status} - ${response.statusText}`);
     })
-    setTodos(todos);
+    setTodos(Object.entries(todos));
   };
 
   useEffect(() => {
     fetchData()
   }, []);
 
-  const completedTasks = (todo) => todo.tasks.reduce((acc, curr) => curr.completed ? acc + 1 : acc, 0);
+  const completedTasks = todo => {
+    const tasks = Object.values(todo.tasks);
+    return tasks.reduce((acc, curr) => curr.completed ? acc + 1 : acc, 0);
+  };
 
   return [
     <NewTodoButton key='newtodo' modal={props.modal} update={fetchData}/>,
@@ -32,21 +35,21 @@ function Todos(props) {
         <h1>My TODOs</h1>
       </header>
       <div id="grid">
-        {todos.filter(filter).map(todo => {
+        {todos.filter(filter).map(([id, todo]) => {
           const completed = completedTasks(todo);
-          const empty = todo.tasks.length === 0;
+          const empty = Object.keys(todo.tasks).length === 0;
 
           return <Todo 
-            click={e => (window.location.href = `/edit?${todo.id}`)}
+            click={e => (window.location.href = `/edit?${id}`)}
             modal={props.modal}
-            key={todo.id}
-            id={todo.id} 
+            key={id}
+            id={id} 
             empty={empty}
             title={todo.title} 
-            tasks={todo.tasks} 
+            tasks={Object.values(todo.tasks)} 
             completed={completed}
             update={fetchData}
-            progress={empty ? 'No tasks' : `${completed}/${todo.tasks.length} Tasks`} 
+            progress={empty ? 'No tasks' : `${completed}/${Object.keys(todo.tasks).length} Tasks`} 
           />
         })}
       </div>
