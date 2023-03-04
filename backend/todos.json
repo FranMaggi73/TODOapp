@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Compras",
+    "id": "7a3f4c2a293d7175",
+    "tasks": [
+      {
+        "title": "Tarea 1",
+        "completed": true,
+        "id": "f10f0828260c257f"
+      },
+      {
+        "title": "Tarea 2",
+        "completed": true,
+        "id": "4b547c283d247ce5"
+      },
+      {
+        "title": "Tarea 3",
+        "completed": false,
+        "id": "805b98a0e79c08b1"
+      },
+      {
+        "title": "Tareas 4",
+        "completed": false,
+        "id": "0f9b588bfa5f5bd4"
+      }
+    ]
+  },
+  {
+    "title": "Super",
+    "id": "8f96f74f5f750197",
+    "tasks": [
+      {
+        "title": "",
+        "completed": true,
+        "id": "7b09fc8099539f79"
+      }
+    ]
+  },
+  {
+    "title": "Estudios",
+    "id": "a5c2b4a1ade5d925",
+    "tasks": []
+  },
+  {
+    "title": "Todas Completadas",
+    "id": "f750fb5cd2dd835b",
+    "tasks": [
+      {
+        "title": "Tarea 1",
+        "completed": true,
+        "id": "d4181b28f4d4e4cc"
+      },
+      {
+        "title": "Tarea 2",
+        "completed": true,
+        "id": "c70023334a741742"
+      }
+    ]
+  },
+  {
+    "title": "Incompleta",
+    "id": "6a9ebe71ee6c7609",
+    "tasks": [
+      {
+        "title": "Tarea Completada",
+        "completed": true,
+        "id": "8dde067545bfb576"
+      },
+      {
+        "title": "Tarea 2",
+        "completed": false,
+        "id": "aaf986399dde62b6"
+      },
+      {
+        "title": "Tarea sin Completar",
+        "completed": false,
+        "id": "dc4f54e991415c2d"
+      }
+    ]
+  },
+  {
+    "title": "Vacía",
+    "id": "3b73d64bbf686faf",
+    "tasks": []
+  }
+]
