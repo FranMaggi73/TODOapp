@@ -3,22 +3,14 @@ import {useState} from 'react';
 
 function Sidebar(props) {
   const [isOpen, setIsOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    isOpen === true ? setIsOpen(false) : setIsOpen(true);
-  };
-
-  const filters = []
-  for(let filter in props.filters) {
-    filters.push({ name: filter, filter: props.filters[filter]})
-  }
+  const toggleSidebar = () => isOpen === true ? setIsOpen(false) : setIsOpen(true);
 
   return [
     <div key="burger" id="burger" onClick={toggleSidebar}>☰</div>,
     <aside key='sidebar' id='sidebar' className={isOpen === true ? '' : 'hidden'}>
       <div id='options'>
         <div id='filters'>
-          {filters.map((option) => {
+          {props.filters.map((option) => {
             return (
               <p 
               key={option.name} 

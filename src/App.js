@@ -1,7 +1,6 @@
-import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import View from './pages/view';
+import Home from './pages/home';
 import Layout from './pages/layout';
 import Edit from './pages/edit';
 
@@ -11,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<View />} />
+          <Route index element={<Home />} />
           <Route path='/edit/' element={<Edit/> } />
         </Route>
       </Routes>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import './modal.css';
 
 function Modal(props) {
@@ -14,9 +15,7 @@ function Modal(props) {
 
   return (
     <div autoFocus className='modal' hidden={props.hidden} onClick={props.close}>
-      <div className='modal-body' style={{ opacity: opacity }} onClick={(e) => {
-        e.stopPropagation();
-      }}>
+      <div className='modal-body' style={{ opacity }} onClick={e => e.stopPropagation()}>
         <span className='close' onClick={() => {
           fadeOut();
           setTimeout(() => {

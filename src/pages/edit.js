@@ -1,14 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Searchbox from "../searchbox/searchbox";
-import './edit.css';
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+import './edit.css';
 
 export default function Edit() {
   const [todo, setTodo] = useState([]);
   const [tasks, setTasks] = useState([]);
 
-  const id = window.location.search.slice(1)
+  const id = window.location.search.slice(1);
 
   const fetchData = async () => {
     const todo = await fetch(`/todos/${id}`)
@@ -23,28 +23,28 @@ export default function Edit() {
   };
 
   useEffect(() => {
-    fetchData()
+    fetchData();
   });
 
-  async function deleteTask(todoId, taskId) {
+  async function deleteTask(id, taskId) {
     await fetch(`/todos/delete-task/${taskId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: todoId })
+      body: JSON.stringify({ id })
     })
     fetchData();
   };
 
   async function newTask(id) {
-    const input = document.querySelector('.new-task-input');
+    const title = document.querySelector('.new-task-input').value;
     await fetch(`/todos/create-task/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title: input.value, completed: false })
+      body: JSON.stringify({ title, completed: false })
     });
     fetchData();
   };
@@ -58,14 +58,13 @@ export default function Edit() {
       body: JSON.stringify({ taskId, completed: value })
     });
     fetchData();
-  }
+  };
 
   return (
     <>
       <Link to='/' draggable='false'>
         <div id="go-back"><i className="fa-solid fa-arrow-left"></i></div>
       </Link>
-      <Searchbox key='searchbox'/>
       <div id="todo-edit">
         <h1>{todo.title}</h1>
         {tasks.map((task) => {
@@ -75,14 +74,12 @@ export default function Edit() {
                 type='checkbox' 
                 className="checkbox"  
                 defaultChecked={task.completed}
-                onChange={e => {
-                  checkTasks(id, task.id, e.target.checked);
-                }}
+                onChange={ e => checkTasks(id, task.id, e.target.checked)}
               />
               <p>{task.title}</p>
-              <div className='task-options' onClick={(e) => {
+              <div className='task-options' onClick={ e => {
                   e.stopPropagation();
-                  deleteTask(todo.id, task.id)
+                  deleteTask(todo.id, task.id);
                 }}>
                 <p>...</p>
               </div>

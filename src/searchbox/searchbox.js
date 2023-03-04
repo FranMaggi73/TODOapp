@@ -1,7 +1,7 @@
 import './searchbox.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-function Searchbox(props) {
+function Searchbox() {
   const [showMenu, setShowMenu] = useState('none');
   const [todos, setTodos] = useState([]);
   const [results, setResults] = useState([]);
@@ -17,17 +17,10 @@ function Searchbox(props) {
     setTodos(todos);
   };
 
-  useEffect(() => {
-    fetchData()
-  }, []);
+  fetchData();
 
-  const display = () => {
-    setShowMenu('flex')
-  };
-  
-  const hide = () => {
-    setShowMenu('none')
-  };
+  const display = () => setShowMenu('flex');
+  const hide = () => setShowMenu('none');
 
   const search = (e) => {
     setResults(getResults(e.target.value.toLowerCase().trim(), todos).splice(0));

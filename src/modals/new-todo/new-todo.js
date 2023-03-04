@@ -5,15 +5,15 @@ function NewTodoButton(props) {
   const success = async () => {
     props.modal(null);
 
-    const input = document.querySelector('.modal-input');
+    const title = document.querySelector('.modal-input').value;
     await fetch('/todos/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title: input.value })
+      body: JSON.stringify({ title })
     });
-    props.update()
+    props.update();
   };
 
   const showModal = () => {
@@ -23,15 +23,15 @@ function NewTodoButton(props) {
       title='New TODO'
       onSuccess={success}
       successMessage='Create TODO'
-      Content={<input placeholder="TODO's name..." type='text' className='modal-input'/>}
+      Content={
+        <input placeholder="TODO's name..." type='text' className='modal-input'/>
+      }
     />);
   }
 
   if (window.location.pathname === '/') {
     return (
-      <div key='new-todo-button' className='new-todo' onClick={() => {
-        showModal();
-      }}>
+      <div key='new-todo-button' className='new-todo' onClick={() => showModal()}>
         <p>+</p>
       </div>
     )

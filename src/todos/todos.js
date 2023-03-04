@@ -1,7 +1,62 @@
-import './todos.css';
 import React, { useState, useEffect } from 'react';
+
+import './todos.css';
 import NewTodoButton from '../modals/new-todo/new-todo';
 import Modal from '../modals/modal-template';
+
+function Todos(props) {
+  const [todos, setTodos] = useState([]);
+  const filter = props.selectedFilter;
+
+  const fetchData = async () => {
+    const todos = await fetch('/todos')
+    .then((response) => {
+      if(response.status === 200){
+        return response.json();
+      }
+      throw new Error(`${response.status} - ${response.statusText}`);
+    })
+    setTodos(todos);
+  };
+
+  useEffect(() => {
+    fetchData()
+  }, []);
+
+  function completedTasks(todo) {
+    return todo.tasks.reduce((acc, curr) => {
+      return curr.completed ? (acc + 1) : acc;
+    }, 0);
+  };
+
+  return [
+    <NewTodoButton key='newtodo' modal={props.modal} update={fetchData}/>,
+    <div key="todos" className='container'>
+      <header>
+        <h1>My TODOs</h1>
+      </header>
+      <div id="grid">
+        {todos.filter(filter).map(todo => {
+          const completed = completedTasks(todo);
+          const empty = todo.tasks.length === 0 ? true : false;
+
+          return <Todo 
+            click={e => (window.location.href = `/edit?${todo.id}`)}
+            modal={props.modal}
+            key={todo.id}
+            id={todo.id} 
+            empty={empty}
+            title={todo.title} 
+            tasks={todo.tasks} 
+            completed={completed}
+            update={fetchData}
+            progress={empty ? 'No tasks' : `${completed}/${todo.tasks.length} Tasks`} 
+          />
+        })}
+      </div>
+    </div>
+  ]
+};
 
 function Todo(props) {
   const success = async () => {
@@ -21,7 +76,7 @@ function Todo(props) {
       successMessage='Confirm'
       Content={<h1 className='modal-text'>Are you sure?</h1>}
     />)
-  }
+  };
 
   return (
     <div className='todo' onClick={props.click}>
@@ -49,59 +104,9 @@ function Todo(props) {
         <div className='todo-info todo-type'></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-function Todos(props) {
-  const [todos, setTodos] = useState([]);
 
-  const fetchData = async () => {
-    const todos = await fetch('/todos')
-    .then((response) => {
-      if(response.status === 200){
-        return response.json();
-      }
-      throw new Error(`${response.status} - ${response.statusText}`);
-    })
-    setTodos(todos);
-  };
-
-  useEffect(() => {
-    fetchData()
-  }, []);
-
-  if (window.location.pathname === '/') {
-    return [
-      <NewTodoButton key='newtodo' modal={props.modal} update={fetchData}/>,
-      <div key="todos" className='container'>
-        <header>
-          <h1>My TODOs</h1>
-        </header>
-        <div id="grid">
-          {todos.filter(props.selectedFilter).map(todo => {
-            const completed = todo.tasks.reduce((acc, curr) => {
-              return curr.completed ? (acc + 1) : acc;
-            }, 0);
-
-            const empty = todo.tasks.length === 0 ? true : false;
-
-            return <Todo 
-              click={e => (window.location.href = `/edit?${todo.id}`)}
-              modal={props.modal}
-              key={todo.id}
-              id={todo.id} 
-              empty={empty}
-              title={todo.title} 
-              tasks={todo.tasks} 
-              completed={completed}
-              update={fetchData}
-              progress={empty ? 'No tasks' : `${completed}/${todo.tasks.length} Tasks`} 
-            />
-          })}
-        </div>
-      </div>
-    ]
-  }
-}
 
 export default Todos

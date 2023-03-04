@@ -25,6 +25,7 @@
 }
 
 .option {
+  user-select: none;
   vertical-align: middle;
   text-align: center;
   flex-basis: 60px;
