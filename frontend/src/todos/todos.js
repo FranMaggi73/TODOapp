@@ -23,11 +23,7 @@ function Todos(props) {
     fetchData()
   }, []);
 
-  function completedTasks(todo) {
-    return todo.tasks.reduce((acc, curr) => {
-      return curr.completed ? (acc + 1) : acc;
-    }, 0);
-  };
+  const completedTasks = (todo) => todo.tasks.reduce((acc, curr) => curr.completed ? acc + 1 : acc, 0);
 
   return [
     <NewTodoButton key='newtodo' modal={props.modal} update={fetchData}/>,
@@ -38,7 +34,7 @@ function Todos(props) {
       <div id="grid">
         {todos.filter(filter).map(todo => {
           const completed = completedTasks(todo);
-          const empty = todo.tasks.length === 0 ? true : false;
+          const empty = todo.tasks.length === 0;
 
           return <Todo 
             click={e => (window.location.href = `/edit?${todo.id}`)}
@@ -80,7 +76,7 @@ function Todo(props) {
 
   return (
     <div className='todo' onClick={props.click}>
-      <div className='todo-options' onClick={(e) => {
+      <div className='todo-options' onClick={e => {
           e.stopPropagation();
           showModal();
         }}>

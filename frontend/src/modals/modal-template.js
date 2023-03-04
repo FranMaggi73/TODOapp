@@ -3,15 +3,15 @@ import React, { useEffect, useState } from 'react';
 import './modal.css';
 
 function Modal(props) {
-  const [opacity, setOpacity] = useState(0)
+  const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
-    setOpacity(1)
-  }, [])
+    setOpacity(1);
+  }, []);
 
   function fadeOut() {
-    setOpacity(0)
-  }
+    setOpacity(0);
+  };
 
   return (
     <div autoFocus className='modal' hidden={props.hidden} onClick={props.close}>

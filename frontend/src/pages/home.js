@@ -6,11 +6,11 @@ import Todos from "../todos/todos";
 import filters from "../sidebar/filters";
 
 export default function Home() {
-  const [filter, setFilter] = useState(() => filters[0].filter);
+  const [filter, setFilter] = useState(() => filters.All);
   const [currModal, setModal] = useState(null);
 
   function changeFilter(selectedFilter) {
-    setFilter(selectedFilter);
+    setFilter(() => selectedFilter);
   };
 
   function updateModal(modal) {
