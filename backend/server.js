@@ -1,6 +1,7 @@
 import express from 'express';
-import todosRepo from './repositories/todos.js';
 import bodyParser from 'body-parser';
+
+import todosRepo from './repositories/todosRepository.js';
 const app = express();
 
 app.use(bodyParser.json());
@@ -11,13 +12,13 @@ app.get('/todos', async (req, res) => {
 });
 
 app.get('/todos/:id', async (req, res) => {
-  const todo = await todosRepo.getOne(req.params.id);
+  const todo = await todosRepo.getById(req.params.id);
   res.json(todo);
 });
 
 app.post('/todos/create', async (req, res) => {
   const { title } = req.body;
-  await todosRepo.create({ title });
+  await todosRepo.createTodo(title);
   res.sendStatus(200);
 });
 
@@ -29,12 +30,12 @@ app.post('/todos/create-task/:id', async (req, res) => {
 
 app.put('/todos/check-task/:id', async (req, res) => {
   const { taskId, completed } = req.body;
-  await todosRepo.checkTask(req.params.id, taskId, completed);
+  await todosRepo.updateTask(req.params.id, taskId, { completed });
   res.sendStatus(200);
 })
 
 app.delete('/todos/delete/:id', async (req, res) => {
-  await todosRepo.delete(req.params.id);
+  await todosRepo.deleteTodo(req.params.id);
   res.sendStatus(200);
 });
 
