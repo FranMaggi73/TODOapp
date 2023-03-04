@@ -10,7 +10,7 @@ export default function Home() {
   const [currModal, setModal] = useState(null);
 
   function changeFilter(selectedFilter) {
-    setFilter(() => selectedFilter);
+    setFilter(selectedFilter);
   };
 
   function updateModal(modal) {
@@ -26,4 +26,4 @@ export default function Home() {
       <Todos key='todos' modal={updateModal} selectedFilter={filter}/>
     </>
   );
-}
+};

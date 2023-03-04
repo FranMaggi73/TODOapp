@@ -62,11 +62,6 @@
     "id": "6a9ebe71ee6c7609",
     "tasks": [
       {
-        "title": "Tarea Completada",
-        "completed": true,
-        "id": "8dde067545bfb576"
-      },
-      {
         "title": "Tarea 2",
         "completed": false,
         "id": "aaf986399dde62b6"
@@ -75,6 +70,11 @@
         "title": "Tarea sin Completar",
         "completed": false,
         "id": "dc4f54e991415c2d"
+      },
+      {
+        "title": "Tarea 1*",
+        "completed": false,
+        "id": "6aeb24b435fa5a1c"
       }
     ]
   },
