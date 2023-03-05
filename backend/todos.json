@@ -1,39 +1,23 @@
 {
-  "1": {
-    "title": "Compras",
+  "742a7ec7e334acb0": {
+    "title": "Todo vacío",
+    "tasks": {}
+  },
+  "6c9852d09978a06e": {
+    "title": "Todo incompleto",
     "tasks": {
-      "f10f0828260c257f": {
-        "title": "Tarea 1",
-        "completed": true
-      },
-      "4b547c283d247ce5": {
-        "title": "Tarea 2",
-        "completed": true
-      },
-      "805b98a0e79c08b1": {
-        "title": "Tarea 3",
-        "completed": false
-      },
-      "0f9b588bfa5f5bd4": {
-        "title": "Tareas 4",
+      "c539765d510e6339": {
+        "title": "",
         "completed": false
       }
     }
   },
-  "742a7ec7e334acb0": {
-    "title": "Todo vacío",
+  "a085802567d82278": {
+    "title": "Todo completo",
     "tasks": {
-      "ad51ec5aa8387bd7": {
-        "title": "Tarea 1",
-        "completed": false
-      },
-      "985fc59babf75c19": {
-        "title": "Tarea 2",
-        "completed": false
-      },
-      "ace552047fe6b1de": {
-        "title": "Tarea 3",
-        "completed": false
+      "61304857f0765c3c": {
+        "title": "a",
+        "completed": true
       }
     }
   }
