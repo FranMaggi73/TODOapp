@@ -86,7 +86,7 @@ export default function Edit() {
             </div>
           )
         })}
-        <div className="todo-task">
+        <div className="new-task">
           <button className="new-task-submit" onClick={() => newTask(id)}>+</button>
           <p className="add-task">Add task</p>
           <input 
