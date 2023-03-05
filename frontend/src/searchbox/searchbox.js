@@ -14,7 +14,7 @@ function Searchbox() {
       }
       throw new Error(`${response.status} - ${response.statusText}`);
     })
-    setTodos(todos);
+    setTodos(Object.entries(todos));
   };
 
   fetchData();
@@ -64,7 +64,7 @@ function getResults(value, todos){
     return []
   }
 
-  for(let { title, id } of todos){
+  for(let [id, { title }] of todos){
     if(title.toLowerCase().indexOf(value) === -1){
       continue;
     }
