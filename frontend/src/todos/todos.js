@@ -7,6 +7,7 @@ import Modal from '../modals/modal-template';
 function Todos(props) {
   const [todos, setTodos] = useState([]);
   const filter = props.selectedFilter;
+  const sortBy = props.selectedSortBy;
 
   const fetchData = async () => {
     const todos = await fetch('/todos')
@@ -35,7 +36,7 @@ function Todos(props) {
         <h1>My TODOs</h1>
       </header>
       <div id="grid">
-        {todos.filter(filter).map(([id, todo]) => {
+        {todos.filter(filter).sort(sortBy).map(([id, todo]) => {
           const completed = completedTasks(todo);
           const empty = Object.keys(todo.tasks).length === 0;
 
@@ -70,7 +71,7 @@ function Todo(props) {
     props.modal(<Modal 
       key='new-todo-modal'
       close={() => props.modal(null)} 
-      title={`Delete: ${props.title}`}
+      title={`Delete TODO: ${props.title}`}
       onSuccess={success}
       successMessage='Confirm'
       Content={<h1 className='modal-text'>Are you sure?</h1>}
