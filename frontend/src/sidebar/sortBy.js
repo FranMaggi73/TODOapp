@@ -3,10 +3,14 @@ const percentage = (tasks) => completed(tasks) / Object.keys(tasks).length;
 
 const sortBys = {
   'Most Completed': ([idA, todoA], [idB, todoB]) => {
-    return percentage(todoB.tasks) - percentage(todoA.tasks)
+    const percentageA = percentage(todoA.tasks);
+    const percentageB = percentage(todoB.tasks);
+    return percentageB - percentageA
   },
   'Least Completed': ([idA, todoA], [idB, todoB]) => {
-    return percentage(todoA.tasks) - percentage(todoB.tasks)
+    const percentageA = percentage(todoA.tasks);
+    const percentageB = percentage(todoB.tasks);
+    return percentageA - percentageB
   }
 }
 

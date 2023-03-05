@@ -29,11 +29,11 @@
 }
 
 .option:hover {
-  background-color: #A0A0A0;
+  background-color: #B0B0B0;
 }
 
 .title {
-  background-color: #A0A0A0;
+  background-color: #B0B0B0;
   cursor: pointer;
   user-select: none;
   vertical-align: middle;
@@ -47,7 +47,7 @@
 }
 
 .title:hover {
-  background-color: #A0A0A0;
+  background-color: #B0B0B0;
 }
 
 .option {
@@ -99,7 +99,7 @@
   background-color: #D0D0D0;
 }
 .hide > .title:hover {
-  background-color: #A0A0A0;
+  background-color: #B0B0B0;
 }
 
 .hide > p {

@@ -34,36 +34,19 @@
   font-weight: 400;
 }
 
-.new-task {
-  position: relative;
-  width: max(calc(100% - 70px), 300px);
-  border-radius: 10px;
-  margin-top: 16px;
-  height: 64px;
-  overflow: hidden;
-
-  background: linear-gradient(white, white) padding-box,
-              linear-gradient(to right, rgba(0, 0, 0, 0.75), white) border-box;
-  border: 1px solid transparent;
-}
-
-.new-task p {
-  position: absolute;
-  top: 12px;
-  left: 96px;
-  margin: 0;
-  font-size: 20px;
-  font-weight: 400;
-}
-
 .todo-task {
+  user-select: none;
   position: relative;
   border: 1px solid rgba(0, 0, 0, 0.75);
   width: max(calc(100% - 70px), 300px);
   border-radius: 10px;
   margin-top: 16px;
   height: 64px;
-  overflow: hidden;
+}
+
+.todo-task:hover {
+  cursor: pointer;
+  background-color: #F0F0F0;
 }
 
 .todo-task p{
@@ -73,6 +56,9 @@
   margin: 0;
   font-size: 20px;
   font-weight: 400;
+  max-width: calc(100% - 160px);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .checkbox {
@@ -103,13 +89,14 @@
   right: 20px;
   border-radius: 100%;
   text-align: center;
+  z-index: 2;
 }
 
 .task-options p{
   position: static;
   transform: rotate(90deg);
   height: 40px;
-  width: 40px;
+  min-width: 40px;
   right: 0;
   margin: 0%;
   font-size: 30px;
@@ -122,9 +109,58 @@
   background-color: var(--dark-background);
 }
 
+.new-task {
+  user-select: none;
+  position: relative;
+  width: max(calc(100% - 70px), 300px);
+  border-radius: 10px;
+  margin-top: 16px;
+  height: 64px;
+  overflow: hidden;
+
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(to right, rgba(0, 0, 0, 0.75), white) border-box;
+  border: 1px solid transparent;
+  transition: height 300ms;
+}
+
+.new-task:hover {
+  cursor: pointer;
+  background: linear-gradient(#F0F0F0, white) padding-box,
+              linear-gradient(to right, rgba(0, 0, 0, 0.75), white) border-box;
+  border: 1px solid rgba(0, 0, 0, 0.75)
+}
+
+.menu {
+  height: 220px !important;
+  border: 1px solid black !important;
+}
+
+.menu:hover {
+  background: none !important;
+  cursor: auto;
+}
+
+.menu > input {
+  visibility: visible !important;
+}
+
+.menu > button {
+  visibility: visible !important;
+}
+
+.new-task p {
+  position: absolute;
+  top: 12px;
+  left: 96px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
 .new-task-submit {
   position: absolute;
-  top: calc(50% - 15px);
+  top: 15px;
   padding: 0;
   width: 30px;
   left: 13px;
@@ -142,14 +178,16 @@
 }
 
 .new-task-input {
+  visibility: hidden;
   position: absolute;
-  bottom: 4px;
+  top: 44px;
   left: 96px;
   margin: 0;
   font-size: 20px;
   font-weight: 400;
   background-color: transparent;
   border: none;
+  border-bottom: 1px solid black;
 }
 
 .new-task-input:focus {
@@ -157,6 +195,37 @@
   border-bottom: 1px solid black;
 }
 
-.add-task {
-  top: 4px !important;
+.new-task-confirm {
+  visibility: hidden;
+  position: absolute;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.5px;
+  height: 48px;
+  right: 20px;
+  bottom: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #000000;
+  color: #FFFFFF;
+  width: 160px;
+}
+
+.new-task-cancel {
+  visibility: hidden;
+  position: absolute;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.5px;
+  height: 48px;
+  right: 200px;
+  bottom: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  width: 100px;
+}
+
+.new-task-confirm, .new-task-cancel:hover {
+  cursor: pointer;
 }

@@ -8,7 +8,7 @@
       },
       "4b547c283d247ce5": {
         "title": "Tarea 2",
-        "completed": true
+        "completed": false
       },
       "805b98a0e79c08b1": {
         "title": "Tarea 3",
@@ -19,10 +19,6 @@
         "completed": false
       }
     }
-  },
-  "73d553fb1e5fc0b8": {
-    "title": "Empty",
-    "tasks": {}
   },
   "b883c8bf8a275dab": {
     "title": "Completed",
@@ -83,5 +79,9 @@
         "completed": false
       }
     }
+  },
+  "a31d2c19d5822a4c": {
+    "title": "Empty",
+    "tasks": {}
   }
 }

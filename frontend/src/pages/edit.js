@@ -7,6 +7,17 @@ import './edit.css';
 export default function Edit() {
   const [todo, setTodo] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [showTaskMenu, setShowTaskMenu] = useState(false);
+
+  const toggleTaskMenu = (e) => {
+    setShowTaskMenu(!showTaskMenu);
+    const interval = setInterval(() => {
+      window.scrollTo({ top: (document.body.scrollHeight)})
+    }, 1);
+    setTimeout(() => {
+      clearInterval(interval);
+    }, 300);
+  };
 
   const id = window.location.search.slice(1);
 
@@ -38,7 +49,9 @@ export default function Edit() {
   };
 
   async function newTask(id) {
-    const title = document.querySelector('.new-task-input').value;
+    const input = document.querySelector('.new-task-input');
+    const title = input.value;
+    input.value = '';
     await fetch(`/todos/create-task/${id}`, {
       method: 'POST',
       headers: {
@@ -69,11 +82,15 @@ export default function Edit() {
         <h1>{todo.title}</h1>
         {tasks.map(([taskId, task]) => {
           return (
-            <div key={task.title} className='todo-task'>
+            <div key={task.title} className='todo-task' onClick={e => {
+              const input = e.target.firstChild;
+              input.click()
+            }}>
               <input 
                 type='checkbox' 
                 className="checkbox"  
                 defaultChecked={task.completed}
+                onClick={e => e.stopPropagation()}
                 onChange={ e => checkTasks(id, taskId, e.target.checked)}
               />
               <p>{task.title}</p>
@@ -86,13 +103,22 @@ export default function Edit() {
             </div>
           )
         })}
-        <div className="new-task">
+        <div 
+          className={`new-task ${showTaskMenu ? 'menu' : ''}`} 
+          onClick={showTaskMenu ? () => {} : toggleTaskMenu}
+        >
           <button className="new-task-submit" onClick={() => newTask(id)}>+</button>
-          <p className="add-task">Add task</p>
+          <p>Add task</p>
           <input 
             placeholder="title..." 
             className="new-task-input"
+            onClick={e => e.stopPropagation()}
+            onKeyUp={e => {
+              if(e.keyCode === 13) newTask(id);
+            }}
           />
+          <button className="new-task-confirm" onClick={() => newTask(id)}>Create Task</button>
+          <button className="new-task-cancel" onClick={toggleTaskMenu}>Cancel</button>
         </div>
       </div>
     </>
