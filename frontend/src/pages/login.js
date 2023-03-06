@@ -13,22 +13,31 @@ export default function Login(props) {
 
   const sendData = async (e) => {
     e.preventDefault();
-    const { token } = await fetch(fetchUrl(), {
+    const { errors, user } = await fetch(fetchUrl(), {
       method: 'POST',
       body: new URLSearchParams(new FormData(e.target))
     })
     .then((res) => {
       return res.json()
-    });
+    })
 
-    props.login(token)
+    setEmailError('');
+    setPasswordError('');
+    setPassConfError('');
+    if (errors) {
+      if(errors.email) setEmailError(errors.email);
+      if(errors.password) setPasswordError(errors.password);
+      if(errors.passwordConfirmation) setPassConfError(errors.passwordConfirmation);
+      return
+    };
+
+    props.login(user);
   }
 
   const switchLogin = () => setSignup(!signup)
 
   if (signup) {
     return <SignUp 
-      login={props.login} 
       submit={sendData}
       switch={switchLogin}
       emailError={emailError}
@@ -38,7 +47,6 @@ export default function Login(props) {
   }
 
   return <SignIn 
-      login={props.login} 
       submit={sendData}
       switch={switchLogin}
       emailError={emailError}

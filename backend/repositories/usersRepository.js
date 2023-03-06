@@ -1,5 +1,8 @@
 import fs from 'fs';
+import util from 'util';
 import crypto from 'crypto';
+
+const scrypt = util.promisify(crypto.scrypt);
 
 class UsersRepository {
   constructor(filename) {
@@ -31,16 +34,20 @@ class UsersRepository {
 
   async getByEmail(email) {
     const users = await this.getAll();
-    return users[email];
+    return users[email] ? users[email] : false;
   };
 
   async createUser(email, password) {
     const id = this.randomId();
     const users = await this.getAll();
 
+    const salt = crypto.randomBytes(8).toString('hex');
+    const buffer = await scrypt(password, salt, 64);
+    const encryptedPassword = `${buffer.toString('hex')}.${salt}`
+
     if (users[email]) throw new Error('User already exists');
 
-    users[email] = { id, password, todos: {} };
+    users[email] = { id, password: encryptedPassword, todos: {} };
     await this.writeAll(users);
   };
 
@@ -58,7 +65,15 @@ class UsersRepository {
 
   async validUser(email, password) {
     const users = await this.getAll();
+    if(!users[email]) return false;
     return users[email].password === password;
+  }
+
+  async comparePasswords(saved, supplied){
+    const [hashed, salt] = saved.split('.');
+    const hashedSuppliedBuffer = await scrypt(supplied, salt, 64);
+
+    return hashed === hashedSuppliedBuffer.toString('hex');
   }
 }
 

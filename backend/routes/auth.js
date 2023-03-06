@@ -2,16 +2,16 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import usersRepo from '../repositories/usersRepository.js';
+import validators from './validators.js';
+import middlewares from './middlewares.js';
 
 const router = express.Router();
 
 router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/signout', (req, res) => {
-  console.log(req.session)
-  req.session = null;
-  console.log(req.session)
-  res.sendStatus(200)
+  req.session.userId = null;
+  res.redirect('/')
 })
 
 router.get('/cookie', async (req, res) => {
@@ -22,28 +22,34 @@ router.get('/cookie', async (req, res) => {
     return
   }
   res.json({
-    token: email
+    user: email
   })
 });
 
-router.post('/signin', async (req, res) => {
-  const { email, password } = req.body;
-  const userExists = await usersRepo.validUser(email, password);
-  if (userExists) {
+router.post('/signin',
+  [validators.checkEmail, validators.checkPassword],
+  middlewares.handleErrors(),
+  async (req, res) => {
+    const { email } = req.body;
     req.session.userId = email;
     res.json({
-      token: email
+      user: email
+    });
+  }
+);
+
+router.post('/signup',
+  [validators.requireEmail, validators.requirePassword, validators.requirePasswordConfirmation],
+  middlewares.handleErrors(),
+  async (req, res) => {
+    const { email, password } = req.body;
+    const alreadyExist = await usersRepo.getByEmail(email);
+    await usersRepo.createUser(email, password);
+    req.session.userId = email;
+    res.json({
+      user: email
     })
   }
-});
-
-router.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
-  await usersRepo.createUser(email, password);
-  req.session.userId = email;
-  res.json({
-    token: email
-  })
-})
+);
 
 export default router

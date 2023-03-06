@@ -8,31 +8,41 @@ import Login from './pages/login';
 
 function App() {
   const validateCookie = async () => {
-    const {token} = await fetch('/cookie')
+    const { user } = await fetch('/cookie')
     .then((res) => {
       return res.json()
-    });
+    })
+    .catch((err) => {
+      return
+    })
 
-    if(token) {
-      setName(token[0].toUpperCase());
+    if(user) {
+      setToken(true)
+      setName(user[0].toUpperCase());
+      return
     }
-    return token
-  }
 
+    setToken(false);
+  }
   const [token, setToken] = useState(validateCookie());
   const [name, setName] = useState('');
   
-  const login = (token) => {
-    setToken(token);
-    setName(token[0].toUpperCase());
+  const login = (user) => {
+    setToken(true);
+    setName(user[0].toUpperCase());
   };
-  const clearToken = () => setToken(null);
+
+  const clearToken = async () => {
+    await fetch('/signout')
+    setToken(null)
+  };
 
   useEffect(() => {
     validateCookie()
   }, [])
 
   if (!token) return <Login login={login} />;
+  if (typeof(token) === typeof({})) return;
 
   return (
     <BrowserRouter>

@@ -34,8 +34,9 @@ export default function Edit() {
   };
 
   useEffect(() => {
-    fetchData();
-  });
+    fetchData()
+    // eslint-disable-next-line
+  }, []);
 
   async function deleteTask(id, taskId) {
     await fetch(`/todos/delete-task/${taskId}`, {

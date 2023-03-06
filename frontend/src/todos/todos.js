@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import './todos.css';
-import NewTodoButton from '../modals/new-todo/new-todo';
-import Modal from '../modals/modal-template';
+import NewTodoButton from './new-todo/new-todo.js';
+import Modal from '../modals/modal-template.js';
 
 function Todos(props) {
   const [todos, setTodos] = useState([]);

@@ -14,8 +14,15 @@ function Modal(props) {
   };
 
   return (
-    <div autoFocus className='modal' hidden={props.hidden} onClick={props.close}>
-      <div className='modal-body' style={{ opacity }} onClick={e => e.stopPropagation()}>
+    <div className='modal' hidden={props.hidden} onClick={props.close}>
+      <div 
+        className='modal-body' 
+        style={{ opacity }} 
+        onClick={e => e.stopPropagation()}
+        onKeyUp={e => {
+          if(e.keyCode === 13) props.onSuccess()
+        }}
+        >
         <span className='close' onClick={() => {
           fadeOut();
           setTimeout(() => {

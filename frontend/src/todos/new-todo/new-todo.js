@@ -1,4 +1,4 @@
-import Modal from '../modal-template';
+import Modal from '../../modals/modal-template.js';
 import './new-todo.css'
 
 function NewTodoButton(props) {
@@ -24,7 +24,7 @@ function NewTodoButton(props) {
       onSuccess={success}
       successMessage='Create TODO'
       Content={
-        <input placeholder="TODO's name..." type='text' className='modal-input'/>
+        <input autoFocus placeholder="TODO's name..." type='text' className='modal-input'/>
       }
     />);
   }
