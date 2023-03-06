@@ -1,5 +1,5 @@
 import './searchbox.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Searchbox() {
   const [showMenu, setShowMenu] = useState('none');
@@ -17,7 +17,9 @@ function Searchbox() {
     setTodos(Object.entries(todos));
   };
 
-  fetchData();
+  useEffect(() => {
+    fetchData()
+  }, []);
 
   const display = () => setShowMenu('flex');
   const hide = () => setShowMenu('none');

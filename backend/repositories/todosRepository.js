@@ -11,7 +11,7 @@ class TodosRepository {
     try {
       fs.accessSync(this.filename);
     } catch (error) {
-      fs.writeFileSync(this.filename, '[]');
+      fs.writeFileSync(this.filename, '{}');
     };
   };
 
@@ -27,6 +27,17 @@ class TodosRepository {
     return JSON.parse(await fs.promises.readFile(this.filename, {
       encoding: 'utf8'
     }));
+  }
+
+  async getAllOf(userTodos) {
+    const response = {};
+    const todos = await JSON.parse(await fs.promises.readFile(this.filename, {
+      encoding: 'utf8'
+    }));
+    for(let todoId in userTodos) {
+      response[todoId] = todos[todoId];
+    }
+    return response;
   };
 
   async getById(id) {
@@ -35,6 +46,7 @@ class TodosRepository {
   };
 
   async deleteTodo(id) {
+    console.log('deleting todo with id of: ', id)
     const todos = await this.getAll();
     delete todos[id];
     await this.writeAll(todos);
@@ -45,6 +57,7 @@ class TodosRepository {
     const todos = await this.getAll();
     todos[id] = { title, tasks: {} };
     await this.writeAll(todos);
+    return id;
   };
 
   async updateTodo(id, attrs) {

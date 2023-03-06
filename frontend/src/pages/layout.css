@@ -1,4 +1,4 @@
-.new-todo {
+.user {
   position: fixed;
   display: table;
   height: 40px;
@@ -7,20 +7,20 @@
   background-color: var(--dark-background);
   margin: 0%;
   top: 15px;
-  right: 72px;
+  right: 16px;
   user-select: none;
   z-index: 2;
 }
 
-.new-todo:hover {
+.user:hover {
   cursor: pointer;
 }
 
-.new-todo p{
+.user p{
   position: relative;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-  font-size: 30px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 700;
 }

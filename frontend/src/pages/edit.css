@@ -126,9 +126,8 @@
 
 .new-task:hover {
   cursor: pointer;
-  background: linear-gradient(white, white) padding-box,
-              linear-gradient(to right, rgba(0, 0, 0, 0.75), white) border-box;
-  border: 1px solid rgba(0, 0, 0, 0.75)
+  background: linear-gradient(to right, var(--dark-background), white) padding-box ,
+              linear-gradient(to right, rgba(0, 0, 0, 0.75), white) border-box !important;
 }
 
 .menu {

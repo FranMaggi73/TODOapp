@@ -82,7 +82,7 @@ export default function Edit() {
         <h1>{todo.title}</h1>
         {tasks.map(([taskId, task]) => {
           return (
-            <div key={task.title} className='todo-task' onClick={e => {
+            <div key={taskId} className='todo-task' onClick={e => {
               const input = e.target.firstChild;
               input.click()
             }}>
@@ -105,7 +105,12 @@ export default function Edit() {
         })}
         <div 
           className={`new-task ${showTaskMenu ? 'menu' : ''}`} 
-          onClick={showTaskMenu ? () => {} : toggleTaskMenu}
+          onClick={showTaskMenu ? () => {} : (e) => {
+            toggleTaskMenu();
+            setTimeout(() => {
+              e.target.querySelector('input').focus();
+            }, 300);
+          }}
         >
           <button className="new-task-submit" onClick={() => newTask(id)}>+</button>
           <p>Add task</p>
