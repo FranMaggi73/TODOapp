@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import usersRepo from '../repositories/usersRepository.js';
+import usersDB from '../db/usersDB.js';
 
 export default {
   requireEmail:
@@ -9,8 +9,8 @@ export default {
           .isEmail()
           .withMessage('Must be a valid email')
           .custom(async (email) => {
-              const existingUser = await usersRepo.getByEmail(email);
-              if (existingUser) {
+              const existingUser = await usersDB.Get(email);
+              if (existingUser.length) {
                   throw new Error('Email already in use');
               }
           }),
@@ -34,7 +34,7 @@ export default {
           .isEmail()
           .withMessage('Invalid Email')
           .custom(async (email) => {
-              const user = await usersRepo.getByEmail(email);
+              const user = await usersDB.Get(email);
               if (!user) {
                   throw new Error('Email not found');
               }
@@ -43,14 +43,11 @@ export default {
       check('password')
           .trim()
           .custom(async (password, {req}) => {
-              const user = await usersRepo.getByEmail(req.body.email);
-              if(!user) {
+              const user = await usersDB.Get(req.body.email);
+              if(!user.length) {
                 throw new Error('Invalid password');
               }
-              const validPassword = await usersRepo.comparePasswords(
-                user.password, 
-                password
-                );
+              const validPassword = user[0].password === password;
                 if (!validPassword) {
                   throw new Error('Invalid password');
               }            

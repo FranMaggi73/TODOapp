@@ -3,48 +3,55 @@ import express from "express";
 import todosRepo from '../repositories/todosRepository.js';
 import usersRepo from '../repositories/usersRepository.js';
 
+import usersDB from "../db/usersDB.js";
+import todosDB from "../db/todosDB.js";
+
 const router = express.Router();
 
 router.get('/todos', async (req, res) => {
-  const user = await usersRepo.getByEmail(req.session.userId);
-  const todos = await todosRepo.getAllOf(user.todos);
+  const user = await usersDB.Get(req.session.userId);
+  const todos = await todosDB.GetAll(user[0].todos);
   res.json(todos);
 });
 
 router.get('/todos/:id', async (req, res) => {
-  const todo = await todosRepo.getById(req.params.id);
-  res.json(todo);
+  const todo = await todosDB.Get(req.params.id);
+  res.json(todo[0]);
 });
 
 router.post('/todos/create', async (req, res) => {
   const { title } = req.body;
-  const todoId = await todosRepo.createTodo(title);
-  await usersRepo.addTodo(req.session.userId, todoId);
-  res.sendStatus(200);
+  const todoId = await todosDB.Insert(title);
+  const user = await usersDB.PushTodo(req.session.userId, todoId);
+  const todos = await todosDB.GetAll(user[0].todos);
+  res.json(todos);
 });
 
 router.post('/todos/create-task/:id', async (req, res) => {
   const { title } = req.body;
-  await todosRepo.createTask(req.params.id, title);
-  res.sendStatus(200);
+  const todo = await todosDB.PushTask(req.params.id, { title });
+  res.json(todo);
 });
 
-router.put('/todos/check-task/:id', async (req, res) => {
-  const { taskId, completed } = req.body;
-  await todosRepo.updateTask(req.params.id, taskId, { completed });
+router.put('/todos/update-task/:id', async (req, res) => {
+  const { task } = req.body;
+  console.log(task)
+  await todosDB.UpdateTask(req.params.id, task);
   res.sendStatus(200);
 })
 
 router.delete('/todos/delete/:id', async (req, res) => {
-  await todosRepo.deleteTodo(req.params.id);
-  await usersRepo.removeTodo(req.session.userId, req.params.id);
-  res.sendStatus(200);
+  await todosDB.Delete(req.params.id);
+  const user = await usersDB.PullTodo(req.session.userId, req.params.id);
+  const todos = await todosDB.GetAll(user[0].todos);
+  res.json(todos);
 });
 
 router.delete('/todos/delete-task/:taskId', async (req, res) => {
   const { id } = req.body;
-  await todosRepo.deleteTask(id, req.params.taskId);
-  res.sendStatus(200);
+  const todo = await todosDB.PullTask(id, req.params.taskId);
+  console.log(todo[0])
+  res.json(todo);
 });
 
 export default router

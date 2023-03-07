@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import usersRepo from '../repositories/usersRepository.js';
+import usersDB from '../db/usersDB.js';
+
 import validators from './validators.js';
 import middlewares from './middlewares.js';
 
@@ -12,11 +13,11 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.get('/signout', (req, res) => {
   req.session.userId = null;
   res.redirect('/')
-})
+});
 
 router.get('/cookie', async (req, res) => {
-  const email = req.session.userId
-  const exists = await usersRepo.getByEmail(email);
+  const email = req.session.userId;
+  const exists = await usersDB.Get(email);
   if(!exists) {
     res.json({ token: null })
     return
@@ -43,8 +44,8 @@ router.post('/signup',
   middlewares.handleErrors(),
   async (req, res) => {
     const { email, password } = req.body;
-    const alreadyExist = await usersRepo.getByEmail(email);
-    await usersRepo.createUser(email, password);
+    await usersDB.Get(email);
+    await usersDB.Insert({ email, password, todos:[] });
     req.session.userId = email;
     res.json({
       user: email
