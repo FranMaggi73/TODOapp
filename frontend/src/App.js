@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import Home from './pages/home';
-import Layout from './pages/layout';
-import Edit from './pages/edit';
-import Login from './pages/login';
+import Home from './pages/home/home';
+import Layout from './pages/layout/layout';
+import Edit from './pages/edit/edit';
+import Login from './pages/login/login';
 
 function App() {
   const validateCookie = async () => {

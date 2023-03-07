@@ -5,8 +5,9 @@
   margin: 0%;
   top: 15px;
   left: 80px;
-  background-color: var(--dark-background);
+  background-color: var(--background);
   height: 40px;
+  border: 1px solid var(--font-color);
   border-radius: 20px;
   width: 300px;
   z-index: 1;
@@ -15,6 +16,7 @@
 .search-box i {
   position:relative;
   font-size: 22px;
+  color: var(--font-color);
   aspect-ratio: 1 / 1;
 }
 
@@ -28,7 +30,7 @@
   position: relative;
   display: block;
   width: calc(100% - 40px);
-  background-color: var(--dark-background);
+  background-color: var(--background);
   outline: 0px;
   border-radius: 20px;
 }
@@ -39,7 +41,8 @@
   height: 60%;
   top: 20%;
   margin: 0;
-  background-color: var(--dark-background);
+  background-color: var(--background);
+  color: var(--font-color);
   left: 8px;
   width: calc(100% - 40px);
   font-size: 20px;
@@ -52,7 +55,7 @@
   flex-direction: column;
   margin-top: 44px;
   min-height: 0px;
-  background-color: var(--dark-background);
+  background-color: var(--font-color);
   border-radius: 10px;
   z-index: 0;
   max-height: 240px;
@@ -74,7 +77,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: var(--light-background);
   padding-top: 8px;
 }
 

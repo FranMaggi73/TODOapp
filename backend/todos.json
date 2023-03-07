@@ -1,8 +1,4 @@
 {
-  "650ae20626367fae": {
-    "title": "Empty",
-    "tasks": {}
-  },
   "e32b71317e487ecc": {
     "title": "Completed",
     "tasks": {
@@ -112,5 +108,9 @@
         "completed": false
       }
     }
+  },
+  "a10c0b867eeb4942": {
+    "title": "Empty",
+    "tasks": {}
   }
 }

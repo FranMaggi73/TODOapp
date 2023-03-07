@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
-import Searchbox from '../searchbox/searchbox';
+import Searchbox from './searchbox/searchbox';
 import './layout.css'
 
 export default function Layout(props) {

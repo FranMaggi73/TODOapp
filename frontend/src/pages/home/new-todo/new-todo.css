@@ -1,26 +1,27 @@
-.user {
+.new-todo {
   position: fixed;
   display: table;
   height: 40px;
   width: 40px;
   border-radius: 100%;
-  background-color: var(--dark-background);
+  background-color: var(--font-color);
   margin: 0%;
   top: 15px;
-  right: 16px;
+  right: 72px;
   user-select: none;
   z-index: 2;
 }
 
-.user:hover {
+.new-todo:hover {
   cursor: pointer;
+  background-color: var(--light-background);
 }
 
-.user p{
+.new-todo p{
   position: relative;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 900;
 }

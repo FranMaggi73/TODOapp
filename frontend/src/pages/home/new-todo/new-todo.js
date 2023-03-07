@@ -1,4 +1,5 @@
-import Modal from '../../modals/modal-template.js';
+import api from '../../../api/api.js';
+import Modal from '../../../modal/modal-template.js';
 import './new-todo.css'
 
 function NewTodoButton(props) {
@@ -6,13 +7,7 @@ function NewTodoButton(props) {
     props.modal(null);
 
     const title = document.querySelector('.modal-input').value;
-    await fetch('/todos/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title })
-    });
+    await api.createTodo(title);
     props.update();
   };
 
