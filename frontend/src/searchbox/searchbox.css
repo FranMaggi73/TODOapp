@@ -7,7 +7,7 @@
   left: 80px;
   background-color: var(--dark-background);
   height: 40px;
-  border-radius: 10px;
+  border-radius: 20px;
   width: 300px;
   z-index: 1;
 }
@@ -30,7 +30,7 @@
   width: calc(100% - 40px);
   background-color: var(--dark-background);
   outline: 0px;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .dropdown input{

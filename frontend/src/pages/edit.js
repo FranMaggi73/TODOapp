@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Modal from "../modals/modal-template.js";
 
 import './edit.css';
 
@@ -8,6 +9,7 @@ export default function Edit() {
   const [todo, setTodo] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [showTaskMenu, setShowTaskMenu] = useState(false);
+  const [currModal, setModal] = useState(null);
 
   const toggleTaskMenu = (e) => {
     setShowTaskMenu(!showTaskMenu);
@@ -37,6 +39,25 @@ export default function Edit() {
     fetchData()
     // eslint-disable-next-line
   }, []);
+
+  const success = async () => {
+    setModal(null);
+    await fetch(`/todos/delete/${id}`, {
+      method: 'DELETE'
+    });
+    window.location.href = '/';
+  };
+  
+  const showModal = () => {
+    setModal(<Modal 
+      key='new-todo-modal'
+      close={() => setModal(null)} 
+      title={`Delete TODO: ${todo.title}`}
+      onSuccess={success}
+      successMessage='Confirm'
+      Content={<h1 className='modal-text'>Are you sure?</h1>}
+    />)
+  };
 
   async function deleteTask(id, taskId) {
     await fetch(`/todos/delete-task/${taskId}`, {
@@ -76,10 +97,14 @@ export default function Edit() {
 
   return (
     <>
+      <label key='modal'>
+        {currModal}
+      </label>
       <Link to='/' draggable='false'>
         <div id="go-back"><i className="fa-solid fa-arrow-left"></i></div>
       </Link>
       <div id="todo-edit">
+        <p className='delete-todo' onClick={showModal}>x</p>
         <h1>{todo.title}</h1>
         {tasks.map(([taskId, task]) => {
           return (

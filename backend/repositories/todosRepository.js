@@ -46,7 +46,6 @@ class TodosRepository {
   };
 
   async deleteTodo(id) {
-    console.log('deleting todo with id of: ', id)
     const todos = await this.getAll();
     delete todos[id];
     await this.writeAll(todos);

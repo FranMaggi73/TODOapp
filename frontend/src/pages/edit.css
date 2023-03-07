@@ -228,3 +228,22 @@
 .new-task-confirm, .new-task-cancel:hover {
   cursor: pointer;
 }
+
+.delete-todo {
+  position: absolute;
+  margin: 0;
+  top: 28px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  line-height: 32px;
+  text-align: center;
+  font-size: 40px;
+  border-radius: 100%;
+  font-weight: 100;
+}
+
+.delete-todo:hover {
+  cursor: pointer;
+  background-color: #d9d9d9;
+}

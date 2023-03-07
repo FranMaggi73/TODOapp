@@ -36,9 +36,8 @@ router.put('/todos/check-task/:id', async (req, res) => {
 })
 
 router.delete('/todos/delete/:id', async (req, res) => {
-  const user = usersRepo.getByEmail(req.session.userId);
   await todosRepo.deleteTodo(req.params.id);
-  await usersRepo.removeTodo(user, req.params.id);
+  await usersRepo.removeTodo(req.session.userId, req.params.id);
   res.sendStatus(200);
 });
 
