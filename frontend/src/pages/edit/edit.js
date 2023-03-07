@@ -28,7 +28,7 @@ export default function Edit() {
   const fetchData = async () => {
     const todo = await api.getTodo(id);
     setTodo(todo);
-    setTasks(Object.entries(todo.tasks));
+    setTasks(todo.tasks);
   };
 
   useEffect(() => {
@@ -64,12 +64,12 @@ export default function Edit() {
       <div id="todo-edit">
         <p className='delete-todo' onClick={showModal}>x</p>
         <h1>{todo.title}</h1>
-        {tasks.map(([taskId, task]) => {
+        {tasks.map((task) => {
           return <Task 
             id={id}
-            taskId={taskId}
+            key={task._id}
             task={task}
-            update={fetchData}
+            update={setTasks}
           />
         })}
         <div 
@@ -84,7 +84,7 @@ export default function Edit() {
           <button 
           className="new-task-submit" 
           onClick={() => {
-            api.newTask(id, fetchData);
+            api.newTask(id, setTasks);
           }}>+</button>
           <p>Add task</p>
           <input 

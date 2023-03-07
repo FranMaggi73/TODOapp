@@ -7,8 +7,8 @@ function NewTodoButton(props) {
     props.modal(null);
 
     const title = document.querySelector('.modal-input').value;
-    await api.createTodo(title);
-    props.update();
+    const todos = await api.createTodo(title);
+    props.update(todos);
   };
 
   const showModal = () => {

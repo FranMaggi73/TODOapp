@@ -20,55 +20,79 @@ const api = {
   },
 
   async createTodo(title){
-    fetch('/todos/create', {
+    return await fetch('/todos/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title })
-    });
+    })
+    .then((response) => {
+      if(response.status === 200){
+        return response.json();
+      }
+      throw new Error(`${response.status} - ${response.statusText}`);
+    })
   },
 
   async deleteTodo(id){
-    await fetch(`/todos/delete/${id}`, {
+    return await fetch(`/todos/delete/${id}`, {
       method: 'DELETE'
+    })
+    .then((response) => {
+      if(response.status === 200){
+        return response.json();
+      }
+      throw new Error(`${response.status} - ${response.statusText}`);
     });
   },
 
   async deleteTask(id, taskId, update = () => {}) {
-    await fetch(`/todos/delete-task/${taskId}`, {
+    const todo = await fetch(`/todos/delete-task/${taskId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id })
+    })
+    .then((response) => {
+      if(response.status === 200){
+        return response.json();
+      }
+      throw new Error(`${response.status} - ${response.statusText}`);
     });
-    update();
+    update(todo[0].tasks);
   },
 
   async newTask(id, update = () => {}) {
     const input = document.querySelector('.new-task-input');
     const title = input.value;
     input.value = '';
-    await fetch(`/todos/create-task/${id}`, {
+    const todo = await fetch(`/todos/create-task/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title })
+    })
+    .then((response) => {
+      if(response.status === 200){
+        return response.json();
+      }
+      throw new Error(`${response.status} - ${response.statusText}`);
     });
-    update();
+    update(todo.tasks);
   },
 
-  async checkTasks(id, taskId, value, update = () => {}) {
-    await fetch(`/todos/check-task/${id}`, {
+  async updateTask(id, task, update) {
+    Object.assign(task, update)
+    await fetch(`/todos/update-task/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ taskId, completed: value })
+      body: JSON.stringify({task})
     });
-    update();
   }
 }
 

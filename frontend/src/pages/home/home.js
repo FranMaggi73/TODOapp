@@ -18,24 +18,16 @@ export default function Home() {
 
   const fetchData = async () => {
     const todos = await api.getTodos();
-    setTodos(Object.entries(todos));
+    setTodos(todos);
   };
 
   useEffect(() => {
     fetchData()
   }, []);
 
-  function changeFilter(selectedFilter) {
-    setFilter(() => selectedFilter);
-  };
-  
-  function changeSortBy(selectedSortBy) {
-    setSortBy(() => selectedSortBy);
-  };
-
-  function updateModal(modal) {
-    setModal(modal);
-  };
+  const changeFilter = (selectedFilter) => setFilter(() => selectedFilter);
+  const changeSortBy = (selectedSortBy) => setSortBy(() => selectedSortBy);
+  const updateModal = (modal) => setModal(modal);
 
   return (
     <>
@@ -49,27 +41,27 @@ export default function Home() {
         sortBy={sortBys}
         sortByChange={changeSortBy}
       />
-      <NewTodoButton key='newtodo' modal={updateModal} update={fetchData}/>
+      <NewTodoButton key='newtodo' modal={updateModal} update={setTodos}/>
       <div key="todos" className='container'>
         <header>
           <h1>My TODOs</h1>
         </header>
         <div id="grid">
-          {todos.filter(filter).sort(sortBy).map(([id, todo]) => {
+          {todos.filter(filter).sort(sortBy).map((todo) => {
             const completed = completedTasks(todo);
-            const empty = Object.keys(todo.tasks).length === 0;
+            const empty = todo.tasks.length === 0;
           
             return <Todo 
-              click={e => (window.location.href = `/edit?${id}`)}
+              click={e => (window.location.href = `/edit?${todo._id}`)}
               modal={updateModal}
-              key={id}
-              id={id} 
+              key={todo._id}
+              id={todo._id} 
               empty={empty}
               title={todo.title} 
-              tasks={Object.values(todo.tasks)} 
+              tasks={todo.tasks} 
               completed={completed}
               update={fetchData}
-              progress={empty ? 'No tasks' : `${completed}/${Object.keys(todo.tasks).length} Tasks`} 
+              progress={empty ? 'No tasks' : `${completed}/${todo.tasks.length} Tasks`} 
             />
           })}
         </div>
@@ -79,6 +71,5 @@ export default function Home() {
 };
 
 const completedTasks = todo => {
-  const tasks = Object.values(todo.tasks);
-  return tasks.reduce((acc, curr) => curr.completed ? acc + 1 : acc, 0);
+  return todo.tasks.reduce((acc, curr) => curr.completed ? acc + 1 : acc, 0);
 };

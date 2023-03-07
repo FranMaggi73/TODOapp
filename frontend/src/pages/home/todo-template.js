@@ -2,14 +2,13 @@ import React from 'react';
 
 import './todo-template.css';
 import Modal from '../../modal/modal-template';
+import api from '../../api/api';
 
 export default function Todo(props) {
   const success = async () => {
     props.modal(null);
-    await fetch(`/todos/delete/${props.id}`, {
-      method: 'DELETE'
-    });
-    props.update();
+    const todos = await api.deleteTodo(props.id);
+    props.update(todos);
   };
 
   const showModal = () => {
