@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     validateCookie()
-  }, [])
+  }, []);
 
   if (!token) return <Login login={login} />;
   if (typeof(token) === typeof({})) return;

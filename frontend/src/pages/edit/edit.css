@@ -200,8 +200,8 @@
   bottom: 20px;
   border: none;
   border-radius: 10px;
-  background-color: #000000;
-  color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
   width: 160px;
 }
 
@@ -214,10 +214,15 @@
   height: 48px;
   right: 200px;
   bottom: 20px;
-  border: 1px solid black;
   border-radius: 10px;
-  background-color: #FFFFFF;
   width: 100px;
+  color: #FFFFFF;
+  border: none;
+  background-color: transparent;
+}
+
+.new-task-cancel:hover {
+  background-color: #808080;
 }
 
 .new-task-confirm, .new-task-cancel:hover {

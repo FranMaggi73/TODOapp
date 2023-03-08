@@ -9,7 +9,7 @@ function Searchbox() {
 
   const fetchData = async () => {
     const todos = await api.getTodos();
-    setTodos(Object.entries(todos));
+    setTodos(todos);
   };
 
   useEffect(() => {
@@ -44,9 +44,9 @@ function Searchbox() {
           {results.map((result) => {
             return (
               <div 
-                key={result.id}
+                key={result._id}
                 className='row' 
-                onMouseDown={e => (window.location.href = `/edit?${result.id}`)}
+                onMouseDown={e => (window.location.href = `/edit?${result._id}`)}
               >
                 {result.title}
               </div>
@@ -62,11 +62,11 @@ function getResults(value, todos){
   const results = [];
   if(value === "") return [];
 
-  for(let [id, { title }] of todos){
+  for(let { title, _id } of todos){
     if(title.toLowerCase().indexOf(value) === -1){
       continue;
     }
-    results.push({ title, id });
+    results.push({ title, _id });
   }
   return results;
 };
