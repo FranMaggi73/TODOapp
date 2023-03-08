@@ -3,19 +3,25 @@ import React from 'react';
 import './todo-template.css';
 import Modal from '../../modal/modal-template';
 import api from '../../api/api';
+import { Link } from 'react-router-dom';
 
 export default function Todo(props) {
+  const todo = props.todo;
+  const completed = completedTasks(todo);
+  const empty = todo.tasks.length === 0;
+
   const success = async () => {
     props.modal(null);
-    const todos = await api.deleteTodo(props.id);
-    props.update(todos);
+    delete props.todos[props.todos.indexOf(todo)];
+    const todos = await api.deleteTodo(todo._id);
+    props.setTodos(todos);
   };
 
   const showModal = () => {
     props.modal(<Modal 
       key='new-todo-modal'
       close={() => props.modal(null)} 
-      title={`Delete TODO: ${props.title}`}
+      title={`Delete TODO: ${todo.title}`}
       onSuccess={success}
       successMessage='Confirm'
       Content={<h1 className='modal-text'>Are you sure?</h1>}
@@ -23,30 +29,36 @@ export default function Todo(props) {
   };
 
   return (
-    <div className='todo' onClick={props.click}>
+    <Link to={todo._id ? `/edit?${todo._id}` : '/'} draggable='false' className='todo'>
       <div className='todo-options' onClick={e => {
-          e.stopPropagation();
+          e.preventDefault();
           showModal();
         }}>
         <p>...</p>
       </div>
       <div className='todo-header'>
-        <h1>{props.title}</h1>
+        <h1>{todo.title}</h1>
           <div className='bar'>
             <progress 
-              value={props.completed} 
-              max={props.tasks.length} 
+              value={completed} 
+              max={todo.tasks.length} 
               className='progress-bar'
-              style={{display: props.empty ? 'none' : 'auto'}}
+              style={{display: empty ? 'none' : 'auto'}}
               >
             </progress>
           </div>
       </div>
       <div className='todo-body'>
-        <div className='todo-info todo-progress'><p>{props.progress}</p></div>
+        <div className='todo-info todo-progress'>
+          <p>{empty ? 'No tasks' : `${completed}/${todo.tasks.length} Tasks`}</p>
+        </div>
         <div className='todo-info todo-date'></div>
         <div className='todo-info todo-type'></div>
       </div>
-    </div>
+    </Link>
   );
+};
+
+const completedTasks = todo => {
+  return todo.tasks.reduce((acc, curr) => curr.completed ? acc + 1 : acc, 0);
 };

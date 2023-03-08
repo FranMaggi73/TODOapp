@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/todos', async (req, res) => {
   const user = await usersDB.Get(req.session.userId);
   const todos = await todosDB.GetAll(user[0].todos);
-  res.json(todos);
+  res.json(todos ? todos : []);
 });
 
 router.get('/todos/:id', async (req, res) => {
@@ -25,15 +25,15 @@ router.post('/todos/create', async (req, res) => {
 });
 
 router.post('/todos/create-task/:id', async (req, res) => {
-  const { title } = req.body;
-  const todo = await todosDB.PushTask(req.params.id, { title });
-  res.json(todo);
+  const { task } = req.body;
+  const todo = await todosDB.PushTask(req.params.id, task);
+  res.json(todo[0]);
 });
 
 router.put('/todos/update-task/:id', async (req, res) => {
   const { task } = req.body;
-  await todosDB.UpdateTask(req.params.id, task);
-  res.sendStatus(200);
+  const todo = await todosDB.UpdateTask(req.params.id, task);
+  res.json(todo[0]);
 })
 
 router.delete('/todos/delete/:id', async (req, res) => {
@@ -46,7 +46,7 @@ router.delete('/todos/delete/:id', async (req, res) => {
 router.delete('/todos/delete-task/:taskId', async (req, res) => {
   const { id } = req.body;
   const todo = await todosDB.PullTask(id, req.params.taskId);
-  res.json(todo);
+  res.json(todo[0]);
 });
 
 export default router

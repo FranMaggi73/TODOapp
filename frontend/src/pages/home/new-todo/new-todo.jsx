@@ -1,14 +1,13 @@
 import api from '../../../api/api.js';
-import Modal from '../../../modal/modal-template.js';
+import Modal from '../../../modal/modal-template.jsx';
 import './new-todo.css'
 
 function NewTodoButton(props) {
   const success = async () => {
     props.modal(null);
-
     const title = document.querySelector('.modal-input').value;
-    const todos = await api.createTodo(title);
-    props.update(todos);
+    props.todos.push({ _id: false, title, tasks: [] });
+    api.createTodo(title, props.setTodos);
   };
 
   const showModal = () => {
@@ -24,13 +23,11 @@ function NewTodoButton(props) {
     />);
   }
 
-  if (window.location.pathname === '/') {
-    return (
-      <div key='new-todo-button' className='new-todo' onClick={() => showModal()}>
-        <p>+</p>
-      </div>
-    )
-  }
+  return (
+    <div key='new-todo-button' className='new-todo' onClick={() => showModal()}>
+      <p>+</p>
+    </div>
+  )
 }
 
 export default NewTodoButton

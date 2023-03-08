@@ -14,7 +14,7 @@ export default {
     try {
       return collection.find({ _id : new ObjectId(id)}).toArray();
     } catch (error) {
-      throw new Error(error);
+      return false;
     }
   },
   
@@ -28,7 +28,7 @@ export default {
   },
   
   async GetAll(idsArray) {
-    if(!idsArray.length) return;
+    if(!idsArray.length) return [];
     
     const normIds = idsArray.map((id) => new ObjectId(id));
 
@@ -58,7 +58,10 @@ export default {
   
   async UpdateTask(id, task) {
     try {
-      collection.updateOne({_id: new ObjectId(id), "tasks._id": new ObjectId(task._id)}, {$set: {'tasks.$':task}});
+      await collection.updateOne(
+        { _id : new ObjectId(id), 'tasks._id' : task._id  }, 
+        { $set : { 'tasks.$' : task  }  });
+      return collection.find({ _id : new ObjectId(id)}).toArray();
     } catch (error) {
       throw new Error(error)
     }
@@ -66,7 +69,6 @@ export default {
 
   async PushTask(id, task) {
     task._id = new ObjectId(32);
-    task.completed = false;
   
     try {
       await collection.updateOne({_id: new ObjectId(id)}, {$push: {tasks : task}});
@@ -78,7 +80,9 @@ export default {
 
   async PullTask(id, taskId) {  
     try {
-      await collection.updateOne({_id: new ObjectId(id)}, {$pull: {tasks : { _id : new ObjectId(taskId)}}});
+      await collection.updateOne(
+        { _id : new ObjectId(id) },
+        { $pull : { tasks : { _id : new ObjectId(taskId)}}});
       return collection.find({ _id : new ObjectId(id)}).toArray();
     } catch (error) {
       throw new Error(error)

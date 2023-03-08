@@ -1,17 +1,23 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import api from "../../api/api.js";
-import Modal from "../../modal/modal-template.js";
-import Task from "./task.js";
+import Modal from "../../modal/modal-template.jsx";
+import Task from "./task.jsx";
 import './edit.css';
 
-export default function Edit() {
-  const [todo, setTodo] = useState([]);
-  const [tasks, setTasks] = useState([]);
+export default function Edit({ todos, setTodos }) {
+  const id = window.location.search.slice(1);
+  const [todo, setTodo] = useState(todos.length ? todos.find(todo => todo._id === id) : false);
   const [showTaskMenu, setShowTaskMenu] = useState(false);
   const [currModal, setModal] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    api.getTodo(id).then(todo => setTodo(todo));
+    api.getTodos().then(todos => setTodos(todos));
+  }, [id, setTodos]);
 
   const toggleTaskMenu = (e) => {
     setShowTaskMenu(!showTaskMenu);
@@ -22,24 +28,10 @@ export default function Edit() {
       clearInterval(interval);
     }, 300);
   };
-
-  const id = window.location.search.slice(1);
-
-  const fetchData = async () => {
-    const todo = await api.getTodo(id);
-    setTodo(todo);
-    setTasks(todo.tasks);
-  };
-
-  useEffect(() => {
-    fetchData()
-    // eslint-disable-next-line
-  }, []);
-
+  
   const success = async () => {
     setModal(null);
-    await api.deleteTodo(id);
-    window.location.href = '/';
+    api.deleteTodo(id, setTodos, navigate);
   };
   
   const showModal = () => {
@@ -53,6 +45,7 @@ export default function Edit() {
     />)
   };
 
+  if(!todo) navigate('/');
   return (
     <>
       <label key='modal'>
@@ -63,13 +56,14 @@ export default function Edit() {
       </Link>
       <div id="todo-edit">
         <p className='delete-todo' onClick={showModal}>x</p>
-        <h1>{todo.title}</h1>
-        {tasks.map((task) => {
+        <h1>{todo?.title}</h1>
+        {todo.tasks?.map((task) => {
           return <Task 
             id={id}
             key={task._id}
             task={task}
-            update={setTasks}
+            todo={todo}
+            setTodo={setTodo}
           />
         })}
         <div 
@@ -84,19 +78,15 @@ export default function Edit() {
           <button 
           className="new-task-submit" 
           onClick={() => {
-            api.newTask(id, setTasks);
+            api.newTask(id, todo, setTodo);
           }}>+</button>
           <p>Add task</p>
           <input 
             placeholder="title..." 
             className="new-task-input"
-            onKeyUp={e => {
-              if(e.keyCode === 13) {
-                api.newTask(id, fetchData);
-              }
-            }}
+            onKeyUp={e => {if(e.keyCode === 13) api.newTask(id, todo, setTodo)}}
           />
-          <button className="new-task-confirm" onClick={() => api.newTask(id, fetchData)}>Create Task</button>
+          <button className="new-task-confirm" onClick={() => api.newTask(id, todo, setTodo)}>Create Task</button>
           <button className="new-task-cancel" onClick={toggleTaskMenu}>Cancel</button>
         </div>
       </div>

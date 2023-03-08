@@ -3,17 +3,17 @@ import './login.css';
 import SignUp from "./signup";
 import SignIn from "./signin";
 
-export default function Login(props) {
+export default function Login() {
   const [signup, setSignup] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [passConfError, setPassConfError] = useState('');
 
-  const fetchUrl = () => signup ? '/signup' : 'signin';
+  const fetchUrl = () => signup ? '/signup' : '/signin';
 
   const sendData = async (e) => {
     e.preventDefault();
-    const { errors, user } = await fetch(fetchUrl(), {
+    const { errors } = await fetch(fetchUrl(), {
       method: 'POST',
       body: new URLSearchParams(new FormData(e.target))
     })
@@ -31,7 +31,7 @@ export default function Login(props) {
       return
     };
 
-    props.login(user);
+    window.location.reload();
   }
 
   const switchLogin = () => setSignup(!signup)
