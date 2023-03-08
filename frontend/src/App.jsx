@@ -14,11 +14,10 @@ function App() {
 
   useEffect(() => {
     if (token) api.getTodos().then((todos) => setTodos(todos));
-  }, []);
+  }, [token]);
   
   if (loading) return;
   if (!token) return <Login />;
-  console.log('hi')
   return (
     <BrowserRouter>
       <Routes>

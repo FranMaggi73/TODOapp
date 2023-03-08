@@ -48,20 +48,13 @@ export default {
     }
   },
   
-  async Update(id, update) {
+  async UpdateTodo(id, todo) {
+    delete todo._id
     try {
-      collection.updateOne({ _id : new ObjectId(id) }, update);
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  
-  async UpdateTask(id, task) {
-    try {
-      await collection.updateOne(
-        { _id : new ObjectId(id), 'tasks._id' : task._id  }, 
-        { $set : { 'tasks.$' : task  }  });
-      return collection.find({ _id : new ObjectId(id)}).toArray();
+      collection.updateOne(
+        { _id : new ObjectId(id) }, 
+        { $set : todo });
+      return collection.find({ _id : new ObjectId(id)}).toArray()
     } catch (error) {
       throw new Error(error)
     }
@@ -72,17 +65,6 @@ export default {
   
     try {
       await collection.updateOne({_id: new ObjectId(id)}, {$push: {tasks : task}});
-      return collection.find({ _id : new ObjectId(id)}).toArray();
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-
-  async PullTask(id, taskId) {  
-    try {
-      await collection.updateOne(
-        { _id : new ObjectId(id) },
-        { $pull : { tasks : { _id : new ObjectId(taskId)}}});
       return collection.find({ _id : new ObjectId(id)}).toArray();
     } catch (error) {
       throw new Error(error)

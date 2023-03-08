@@ -64,6 +64,7 @@ export default function Edit({ todos, setTodos }) {
             task={task}
             todo={todo}
             setTodo={setTodo}
+            setTodos={setTodos}
           />
         })}
         <div 
@@ -79,14 +80,21 @@ export default function Edit({ todos, setTodos }) {
           className="new-task-submit" 
           onClick={() => {
             api.newTask(id, todo, setTodo);
+            api.getTodos().then(todos => setTodos(todos));
           }}>+</button>
           <p>Add task</p>
           <input 
             placeholder="title..." 
             className="new-task-input"
-            onKeyUp={e => {if(e.keyCode === 13) api.newTask(id, todo, setTodo)}}
+            onKeyUp={e => {if(e.keyCode === 13) {
+              api.newTask(id, todo, setTodo);
+              api.getTodos().then(todos => setTodos(todos));
+            }}}
           />
-          <button className="new-task-confirm" onClick={() => api.newTask(id, todo, setTodo)}>Create Task</button>
+          <button className="new-task-confirm" onClick={() => {
+            api.newTask(id, todo, setTodo);
+            api.getTodos().then(todos => setTodos(todos));
+          }}>Create Task</button>
           <button className="new-task-cancel" onClick={toggleTaskMenu}>Cancel</button>
         </div>
       </div>
