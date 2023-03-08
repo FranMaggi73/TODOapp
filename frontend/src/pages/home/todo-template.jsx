@@ -13,8 +13,7 @@ export default function Todo(props) {
   const success = async () => {
     props.modal(null);
     delete props.todos[props.todos.indexOf(todo)];
-    const todos = await api.deleteTodo(todo._id);
-    props.setTodos(todos);
+    api.deleteTodo(todo._id, props.setTodos);
   };
 
   const showModal = () => {

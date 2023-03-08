@@ -1,12 +1,6 @@
 const api = {
   async getTodos(){
-    return fetch('/todos')
-      .then((response) => {
-        if(response.status === 200){
-          return response.json();
-        }
-        throw new Error(`${response.status} - ${response.statusText}`);
-      });
+    return fetch('/todos').then(res => res.json())
   },
 
   async getTodo(id){
@@ -19,7 +13,7 @@ const api = {
     })
   },
 
-  async createTodo(title, setTodos){
+  createTodo(title, setTodos) {
     fetch('/todos/create', {
       method: 'POST',
       headers: {
@@ -31,7 +25,20 @@ const api = {
     .then(res => setTodos(res))
   },
 
-  async deleteTodo(id, setTodos, navigate){
+  updateTodo(todo, setTodo, setTodos) {
+    fetch(`/todos/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ todo })
+    })
+    .then(res => res.json())
+    .then(res => setTodo(res))
+    .finally(() => this.getTodos().then(todos => setTodos(todos)));
+  },
+
+  deleteTodo(id, setTodos, navigate) {
     fetch(`/todos/delete/${id}`, {
       method: 'DELETE'
     })
@@ -40,19 +47,8 @@ const api = {
     .finally(() => {if(navigate) navigate('/')});
   },
 
-  async deleteTask(id, taskId, setTodo) {
-    fetch(`/todos/delete-task/${taskId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id })
-    })
-    .then(res => res.json())
-    .then(res => setTodo(res));
-  },
-
   newTask(id, todo, setTodo) {
+
     const input = document.querySelector('.new-task-input');
     const task = { _id: '1', title: input.value, completed: false };
     input.value = '';
@@ -67,19 +63,6 @@ const api = {
     })
     .then(res => res.json())
     .then(res => setTodo(res))
-  },
-
-  async updateTask(id, task, setTodo, update) {
-    Object.assign(task, update);
-    fetch(`/todos/update-task/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({task})
-    })
-    .then(res => res.json())
-    .then(res => setTodo(res));
   }
 }
 

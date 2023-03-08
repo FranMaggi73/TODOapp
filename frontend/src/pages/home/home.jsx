@@ -34,7 +34,7 @@ export default function Home(props) {
           <h1>My TODOs</h1>
         </header>
         <div id="grid">
-          {props.todos.filter(filter).sort(sortBy).map((todo) => {
+          {props.todos?.filter(filter).sort(sortBy).map((todo) => {
             return <Todo 
               todo={todo}
               todos={props.todos}
