@@ -57,6 +57,7 @@ export default {
   },
   
   async UpdateTask(id, task) {
+    task._id = new ObjectId(task._id)
     try {
       await collection.updateOne(
         { _id : new ObjectId(id), 'tasks._id' : task._id  }, 
