@@ -20,14 +20,14 @@ export default function Task({
         onClick={e => e.stopPropagation()}
         onChange={e => {
           task.completed = !task.completed;
-          debounce(api.updateTodo(todo, setTodo, setTodos), 800);
+          debounce(api.updateTodo(todo, setTodo, setTodos), 500);
         }}
       />
       <p>{task.title}</p>
       <div className='task-options' onClick={ e => {
           e.stopPropagation();
           todo.tasks = todo.tasks.filter(currTask => currTask._id !== task._id);
-          debounce(api.updateTodo(todo, setTodo, setTodos), 800);
+          debounce(api.updateTodo(todo, setTodo, setTodos), 500);
         }}>
         <p>...</p>
       </div>

@@ -35,6 +35,7 @@ const api = {
     })
     .then(res => res.json())
     .then(res => setTodo(res))
+    .finally(() => this.getTodos().then(todos => setTodos(todos)));
   },
 
   deleteTodo(id, setTodos, navigate) {
