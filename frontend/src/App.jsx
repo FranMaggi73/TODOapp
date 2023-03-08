@@ -13,8 +13,8 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    api.getTodos().then((todos) => setTodos(todos));
-  }, []);
+    if (token) api.getTodos().then((todos) => setTodos(todos));
+  }, [token]);
   
   if (loading) return;
   if (!token) return <Login />;
