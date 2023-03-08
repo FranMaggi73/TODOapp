@@ -9,12 +9,13 @@ import './edit.css';
 
 export default function Edit({ todos, setTodos }) {
   const id = window.location.search.slice(1);
-  const [todo, setTodo] = useState(todos.length ? todos.find(todo => todo._id === id) : api.getTodo(id));
+  const [todo, setTodo] = useState(todos.length ? todos.find(todo => todo._id === id) : false);
   const [showTaskMenu, setShowTaskMenu] = useState(false);
   const [currModal, setModal] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    api.getTodo(id).then(todo => setTodo(todo));
     api.getTodos().then(todos => setTodos(todos));
   }, []);
 
