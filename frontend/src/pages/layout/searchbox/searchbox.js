@@ -1,6 +1,7 @@
 import './searchbox.css'
 import { useEffect, useState } from 'react';
 import api from '../../../api/api';
+import { Link } from 'react-router-dom';
 
 function Searchbox() {
   const [showMenu, setShowMenu] = useState('none');
@@ -36,6 +37,12 @@ function Searchbox() {
           onFocus={display}
           onBlur={hide}
           onKeyUp={search}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              console.log(e)
+              console.log('enter')
+            }
+          }}
         />
         <div 
           className="dropdown-menu"
@@ -43,13 +50,13 @@ function Searchbox() {
         >
           {results.map((result) => {
             return (
-              <div 
+              <Link
+                to={`/edit?${result._id}`}
                 key={result._id}
                 className='row' 
-                onMouseDown={e => (window.location.href = `/edit?${result._id}`)}
               >
-                {result.title}
-              </div>
+              {result.title}
+              </Link>
             )
           })}
         </div>
