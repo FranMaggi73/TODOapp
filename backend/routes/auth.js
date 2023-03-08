@@ -18,7 +18,7 @@ router.get('/signout', (req, res) => {
 router.get('/cookie', async (req, res) => {
   const email = req.session.userId;
   const exists = await usersDB.Get(email);
-  if(!exists) {
+  if(!exists.length) {
     res.json({ token: null })
     return
   }

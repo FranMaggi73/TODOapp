@@ -1,8 +1,5 @@
 import express from "express";
 
-import todosRepo from '../repositories/todosRepository.js';
-import usersRepo from '../repositories/usersRepository.js';
-
 import usersDB from "../db/usersDB.js";
 import todosDB from "../db/todosDB.js";
 
@@ -35,7 +32,6 @@ router.post('/todos/create-task/:id', async (req, res) => {
 
 router.put('/todos/update-task/:id', async (req, res) => {
   const { task } = req.body;
-  console.log(task)
   await todosDB.UpdateTask(req.params.id, task);
   res.sendStatus(200);
 })
@@ -50,7 +46,6 @@ router.delete('/todos/delete/:id', async (req, res) => {
 router.delete('/todos/delete-task/:taskId', async (req, res) => {
   const { id } = req.body;
   const todo = await todosDB.PullTask(id, req.params.taskId);
-  console.log(todo[0])
   res.json(todo);
 });
 

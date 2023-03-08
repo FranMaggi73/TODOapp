@@ -1,8 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-const uri = "mongodb+srv://Mariano:zR1JJcKqLANDjkrp@cluster0.i9q8rjg.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Mariano:zR1JJcKqLANDjkrp@todoapp.xvrm8zl.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
-const dbName = "test";
+const dbName = "TODOapp";
 const todosColl = "todos";
 const database = client.db(dbName);
 const collection = database.collection(todosColl);
